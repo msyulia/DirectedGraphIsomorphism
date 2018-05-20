@@ -3,10 +3,39 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:g ="clr-namespace:Microsoft.Msagl.GraphViewerGdi;assembly=Microsoft.Msagl.GraphViewerGdi"
         xmlns:local="clr-namespace:DGI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Izomorfizm grafów" Height="600" Width="800">
+    <StackPanel>
+        <DockPanel HorizontalAlignment="Left" Height="25" LastChildFill="False" Margin="0,0,-8,0" VerticalAlignment="Top" Width="800">
+            <Menu Height="25" VerticalAlignment="Top" Width="792">
+                <MenuItem Header="Plik" Height="25" Width="30">
+                    <MenuItem Header="Nowy" HorizontalAlignment="Left" Height="20" Width="150"/>
+                    <MenuItem Header="Otwórz" HorizontalAlignment="Left" Height="20" Width="150" />
+                    <MenuItem Header="Zapisz" HorizontalAlignment="Left" Height="20" Width="150"/>
+                    <MenuItem Header="Zapisz jako" HorizontalAlignment="Left" Height="20" Width="150" />
+                    <MenuItem Header="-------------" HorizontalAlignment="Left" Height="20" Width="150" IsEnabled="False"/>
+                    <MenuItem Header="Wyjście" HorizontalAlignment="Left" Height="20" Width="150"/>
+                </MenuItem>
+                <MenuItem Header="Pomoc" Height="25" Width="50">
+                    <MenuItem Header="O Autorach" HorizontalAlignment="Left" Height="20" Width="150"/>
+                    <MenuItem Header="Źródło" HorizontalAlignment="Left" Height="20" Width="150" Click="SourceCodeButton_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Grid Height="470">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*">
+                    
+                </ColumnDefinition>
+                <ColumnDefinition Width="*">
+
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <ProgressBar Height="40" Width="775"></ProgressBar>
+        <TextBox Text="TEST" TextAlignment="Center" Height="20" Width="775" VerticalAlignment="Bottom" IsReadOnly="True"/>
+    </StackPanel>
 </Window>
+    
