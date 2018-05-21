@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using DGI.Model;
 
@@ -9,7 +10,8 @@ namespace DGI.Controller
     /// Dla wszystkich operacji mierzony jest czas wykonywania 
     /// </summary>
     public class GraphOperation
-    {
+    { 
+
         /// <summary>
         /// Delegat dla operacji na grafach.
         /// Wszystkie operacje na grafach będą się wykonywać asynchronicznie.
@@ -40,5 +42,7 @@ namespace DGI.Controller
             result += stopwatch.ElapsedMilliseconds;
             return result;
         }
+
+
     }
 }

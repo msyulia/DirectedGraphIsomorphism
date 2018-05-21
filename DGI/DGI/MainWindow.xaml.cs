@@ -16,6 +16,7 @@ using Microsoft.Msagl;
 using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.Layout;
 using Microsoft.Msagl.GraphViewerGdi;
+using DGI.Controller;
 
 namespace DGI
 {
@@ -30,11 +31,17 @@ namespace DGI
         private GViewer viewer_1 = new GViewer();
         private GViewer viewer_2 = new GViewer();
 
+        private static MainWindow mainWindow;
+
+        
+
         public MainWindow()
         {
             InitializeComponent();
+            mainWindow = this;
+            GraphController gc = new GraphController(this);
 
-
+            
         }
         private void Create_GraphView()
         {
@@ -45,6 +52,11 @@ namespace DGI
         {
             BrowserController bl = new BrowserController(REPO_URI);
             bl.OpenBrowser();
+        }
+
+        public static void ChangeProgress(int val)
+        {
+            mainWindow.progressBar.Value = val;
         }
     }
 }

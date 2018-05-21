@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DGI.Model
 {
-    class VerticeModel
+    public class VerticeModel
     {
         int name;
         int inputEdgesCount;
