@@ -17,6 +17,8 @@ using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.Layout;
 using Microsoft.Msagl.GraphViewerGdi;
 using DGI.Controller;
+using DGI.Model;
+using DGI.CoreClasses;
 
 namespace DGI
 {
@@ -39,9 +41,31 @@ namespace DGI
         {
             InitializeComponent();
             mainWindow = this;
-            GraphController gc = new GraphController(this);
 
-            
+            GraphController gc1 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a1);
+            GraphController gc2 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a2);
+
+            GraphController gc3 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a1);
+            GraphController gc4 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a2);
+            GraphController gc5 = new GraphController(this, ExampleAdjacencyLists.lista4_6_b1);
+
+            GraphController gc6 = new GraphController(this, ExampleAdjacencyLists.lista6_7_a1);
+            GraphController gc7 = new GraphController(this, ExampleAdjacencyLists.lista6_7_a2);
+            GraphController gc8 = new GraphController(this, ExampleAdjacencyLists.lista6_7_b1);
+
+            GraphController gc9 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a1);
+            GraphController gc10 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a2);
+
+            System.Threading.Thread.Sleep(4000);
+            int a = 0; // ilość sprawdzonych kombinacji
+            Dupa.Text += "Pierwszy zestaw: " + GraphOperation.IsBijective(gc1.Graph, gc2.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            Dupa.Text += "\nDrugi zestaw: " + GraphOperation.IsBijective(gc3.Graph, gc4.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            Dupa.Text += "\nZestaw niepoprawny 6 krawędzi: " + GraphOperation.IsBijective(gc4.Graph, gc5.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            Dupa.Text += "\nPomieszanie zestawów 1 i 2: " + GraphOperation.IsBijective(gc1.Graph, gc4.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            Dupa.Text += "\nWysłanie tego samego grafu: " + GraphOperation.IsBijective(gc1.Graph, gc1.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            Dupa.Text += "\nWysłanie 2 grafów z 6 wierz: " + GraphOperation.IsBijective(gc6.Graph, gc7.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            Dupa.Text += "\nWysłanie 2 grafów z 6 wierz wersja 2: " + GraphOperation.IsBijective(gc6.Graph, gc8.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            Dupa.Text += "\nGrafy z 9 wierzchołkami: " + GraphOperation.IsBijective(gc9.Graph, gc10.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
         }
         private void Create_GraphView()
         {

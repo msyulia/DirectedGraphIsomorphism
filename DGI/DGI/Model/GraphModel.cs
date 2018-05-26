@@ -23,12 +23,12 @@ namespace DGI.Model
         List<VerticeModel> vertices;
         public List<VerticeModel> Vertices { get { return vertices; } }
 
+        #region Constructors
         public GraphModel()
         {
             vertices = new List<VerticeModel>();
         }
 
-        #region Constructors
         public GraphModel(int[,] matrix)
         {
             vertices = new List<VerticeModel>();

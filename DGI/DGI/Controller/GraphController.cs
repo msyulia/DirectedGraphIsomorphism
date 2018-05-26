@@ -10,15 +10,16 @@ namespace DGI.Controller
 {
     public class GraphController
     {
-        private static GraphModel graph;
-        public static GraphModel Graph { get { return graph; } }
+        GraphModel graph;
+        public GraphModel Graph { get { return graph; } private set { graph = value; } }
 
         private static MainWindow mainWindowRef;
 
-        public GraphController(MainWindow window)
+        public GraphController(MainWindow window, List<List<int>> adjList)
         {
             mainWindowRef = window;
             graph = new GraphModel();
+            graph.SetAdjList(adjList);
             setWorker();
 
         }
@@ -39,27 +40,6 @@ namespace DGI.Controller
 
         private void worker_doWork(object sender, DoWorkEventArgs e)
         {
-            /* w przyszłości to do zastąpienia pobeiraniem wartości z pól do wprowadzania z MainWindow */
-            List<List<int>> list = new List<List<int>>();
-            Random random = new Random();
-            int ileElem = 3000;
-            double oneProgressStep = 70 / (double)ileElem;
-            for (int i = 0; i < ileElem; i++)
-                list.Add(new List<int>());
-
-            for (int i = 0; i < ileElem; i++)
-            {
-                for (int j = 0; j < ileElem / 2; j++)
-                {
-                    var a = random.Next(1, list.Count + 1);
-                    if (!list[i].Contains(a)) list[i].Add(a);
-                }
-                if(i%20==0) backgroundWorker.ReportProgress((int)(i * oneProgressStep));
-            }
-            graph.SetAdjList(list);
-            /* koniec kodu tymczasowego  */
-
-
             int edges = 0;
             foreach (var row in graph.AdjacencyList)
                 foreach (var item in row)
@@ -83,6 +63,7 @@ namespace DGI.Controller
         private void worker_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
             Console.WriteLine("\n\n\n*** KONIEC!!! ***\n\n\n");
+            backgroundWorker = null;
         }
 
         private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
