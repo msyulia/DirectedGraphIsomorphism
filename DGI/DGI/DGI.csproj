@@ -66,7 +66,9 @@
     </ApplicationDefinition>
     <Compile Include="Controller\GraphController.cs" />
     <Compile Include="Controller\GraphOperation.cs" />
+    <Compile Include="CoreClasses\ExampleAdjacencyLists.cs" />
     <Compile Include="Model\GraphModel.cs" />
+    <Compile Include="Model\VerticeModel.cs" />
     <Compile Include="View\GraphView.cs" />
     <Compile Include="View\View.cs" />
     <Page Include="MainWindow.xaml">

@@ -25,17 +25,12 @@
             </Menu>
         </DockPanel>
         <Grid Height="470">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*">
-                    
-                </ColumnDefinition>
-                <ColumnDefinition Width="*">
-
-                </ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            <TextBox Name="Dupa">
+                
+            </TextBox>
         </Grid>
-        <ProgressBar Height="40" Width="775"></ProgressBar>
-        <TextBox Text="TEST" TextAlignment="Center" Height="20" Width="775" VerticalAlignment="Bottom" IsReadOnly="True"/>
+        <ProgressBar Height="40" Width="775" Name="progressBar" Minimum="0" Maximum="100"></ProgressBar>
+        <TextBlock Name="textbox" Text="TEST" TextAlignment="Center" Height="20" Width="775" VerticalAlignment="Bottom" />
     </StackPanel>
 </Window>
     

@@ -43,17 +43,18 @@ namespace DGI.CoreClasses
         /// </summary>
         /// <param name="order"> New order list [0-based indexing system]</param>
         /// <param name="actual"> Actual list od adjacency [normal indexing system]</param>
-        public static List<List<int>> NewAdjacencyListOrder(int[] order, List<List<int>> actual)
+        public static List<List<int>> NewAdjacencyListOrder(List<int> order, List<List<int>> actual)
         {
             List<List<int>> list = new List<List<int>>();
             for (int i = 0; i < actual.Count; i++)
             {
                 list.Add(new List<int>());
-                int[] consideredLine = new int[actual[order[i]].Count];
+                int orderN = order[i];
+                int[] consideredLine = new int[actual[orderN].Count];
                 int j = 0;
-                foreach (var item in actual[order[i]]){consideredLine[j] = item; j++; }
+                foreach (var item in actual[orderN]) { consideredLine[j] = item; j++; }
                 for (int k = 0; k < consideredLine.Length; k++)
-                    for (int l = 0; l < order.Length; l++) if(order[l] == consideredLine[k]) { list[i].Add(l+1); break; }
+                    for (int l = 0; l < order.Count; l++) if (order[l] == (consideredLine[k] - 1)) { list[i].Add(l + 1); break; }
             }
             return list;
         }
