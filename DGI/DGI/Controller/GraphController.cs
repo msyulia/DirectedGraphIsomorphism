@@ -18,27 +18,26 @@ namespace DGI.Controller
         public GraphController(MainWindow window, List<List<int>> adjList)
         {
             mainWindowRef = window;
-            graph = new GraphModel();
-            graph.SetAdjList(adjList);
-            setWorker();
+            graph = new GraphModel(adjList);
+            SetWorker();
 
         }
 
         #region Asynchronous, background work
         BackgroundWorker backgroundWorker;
 
-        public void setWorker( )
+        public void SetWorker( )
         {
             backgroundWorker = new BackgroundWorker();
-            backgroundWorker.RunWorkerCompleted += worker_Completed;
+            backgroundWorker.RunWorkerCompleted += Worker_Completed;
             backgroundWorker.WorkerReportsProgress = true;
-            backgroundWorker.DoWork += worker_doWork;
-            backgroundWorker.ProgressChanged += worker_ProgressChanged;
+            backgroundWorker.DoWork += Worker_doWork;
+            backgroundWorker.ProgressChanged += Worker_ProgressChanged;
             backgroundWorker.RunWorkerAsync();
 
         }
 
-        private void worker_doWork(object sender, DoWorkEventArgs e)
+        private void Worker_doWork(object sender, DoWorkEventArgs e)
         {
             int edges = 0;
             foreach (var row in graph.AdjacencyList)
@@ -52,7 +51,7 @@ namespace DGI.Controller
             double oneStep = 28 / (double)n;
             for (int i = 0; i < n; i++)
             {
-                var inOutEdg = countInAndOutEdges(i);
+                var inOutEdg = CountInAndOutEdges(i);
                 graph.AddVertice(i, inOutEdg.Item1, inOutEdg.Item2);
 
                 if(i%20==0) backgroundWorker.ReportProgress(72 + (int)(oneStep * i));
@@ -60,19 +59,19 @@ namespace DGI.Controller
             backgroundWorker.ReportProgress(100);
         }
 
-        private void worker_Completed(object sender, RunWorkerCompletedEventArgs e)
+        private void Worker_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
             Console.WriteLine("\n\n\n*** KONIEC!!! ***\n\n\n");
             backgroundWorker = null;
         }
 
-        private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             MainWindow.ChangeProgress(e.ProgressPercentage);
         }
         #endregion
 
-        private Tuple<int, int> countInAndOutEdges(int row)
+        private Tuple<int, int> CountInAndOutEdges(int row)
         {
             int inEdg = 0;
             int outEdg = 0;

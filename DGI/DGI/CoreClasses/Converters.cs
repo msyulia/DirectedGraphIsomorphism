@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DGI.Model;
+using Microsoft.Msagl.Drawing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,24 @@ namespace DGI.CoreClasses
 {
     public static class Converters
     {
+        public static Graph GraphModelToMSAGLGraph(GraphModel sourceGraph)
+        {
+            Graph result = new Graph();
+            int counter = 0;
+            for (int i = 0; i < sourceGraph.AdjacencyList.Count; i++)
+            {
+                result.AddNode(i.ToString());
+            }
+            foreach (List<int> List in sourceGraph.AdjacencyList)
+            {
+                foreach (int value in List)
+                {
+                    result.AddEdge(counter.ToString(), value.ToString());
+                }
+                counter++;
+            }
+            return result;
+        }
         public static int[,] ListToAdjacencyMatrix(List<List<int>> list)
         {
             if (list == null) return null;
@@ -18,7 +38,7 @@ namespace DGI.CoreClasses
             foreach (var row in list)
             {
                 foreach (var item in row)
-                    adjMtrx[line, item - 1] = 1;
+                    adjMtrx[line, item] = 1;
                 line++;
             }
             return adjMtrx;
@@ -39,7 +59,7 @@ namespace DGI.CoreClasses
         }
 
         /// <summary>
-        /// Core method, which allow to compare 2 lists of Adjacency. If they are the same, graphs are bijective
+        /// Core method, which allow to compare 2 lists of Adjacency. If they are the same, graphs are isomorphic
         /// </summary>
         /// <param name="order"> New order list [0-based indexing system]</param>
         /// <param name="actual"> Actual list od adjacency [normal indexing system]</param>

@@ -18,7 +18,7 @@ namespace DGI.Model
         public List<List<int>> AdjacencyList { get { return adjList; } private set { adjList = value; } }
 
         int edgeCount;
-        public int EdgeCount { get { return edgeCount; } set{ edgeCount = value; } }
+        public int EdgeCount { get { return edgeCount; } set { edgeCount = value; } }
 
         List<VerticeModel> vertices;
         public List<VerticeModel> Vertices { get { return vertices; } }
@@ -41,6 +41,36 @@ namespace DGI.Model
             vertices = new List<VerticeModel>();
             adjList = list;
             adjMtrx = Converters.ListToAdjacencyMatrix(adjList);
+        }
+
+        public  static GraphModel RandomGraph(int verticesCount, int maxOutEdgeCount)
+        {
+            if (maxOutEdgeCount > verticesCount)
+            {
+                return null;
+            }
+
+            List<List<int>> adjacencyList = new List<List<int>>();
+            int edgeCount = 0;
+            int newVertice = 0;
+            Random random = new Random();
+
+            for (int i = 0; i < verticesCount; i++)
+            {
+                List<int> listToAdd = new List<int>();
+                edgeCount = random.Next(0, maxOutEdgeCount);
+                for (int j = 0; j < edgeCount; j++)
+                {
+                    newVertice = random.Next(0, verticesCount);
+                    while (listToAdd.Contains(newVertice))
+                    {
+                        newVertice = random.Next(0, verticesCount);
+                    }
+                    listToAdd.Add(newVertice);
+                }
+                adjacencyList.Add(listToAdd);
+            }
+            return new GraphModel(adjacencyList);
         }
         #endregion
 
