@@ -42,8 +42,8 @@ namespace DGI
             InitializeComponent();
             mainWindow = this;
 
-            GraphController gc1 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a1);
-            GraphController gc2 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a2);
+            /* GraphController gc1 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a1);
+             GraphController gc2 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a2);
 
             GraphController gc3 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a1);
             GraphController gc4 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a2);
@@ -55,18 +55,27 @@ namespace DGI
 
             GraphController gc9 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a1);
             GraphController gc10 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a2);
+            System.Threading.Thread.Sleep(2000);*/
 
-            System.Threading.Thread.Sleep(4000);
-            int a = 0; // ilość sprawdzonych kombinacji
-            Dupa.Text += "Pierwszy zestaw: " + GraphOperation.IsBijective(gc1.Graph, gc2.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            Dupa.Text += "\nDrugi zestaw: " + GraphOperation.IsBijective(gc3.Graph, gc4.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            Dupa.Text += "\nZestaw niepoprawny 6 krawędzi: " + GraphOperation.IsBijective(gc4.Graph, gc5.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            Dupa.Text += "\nPomieszanie zestawów 1 i 2: " + GraphOperation.IsBijective(gc1.Graph, gc4.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            Dupa.Text += "\nWysłanie tego samego grafu: " + GraphOperation.IsBijective(gc1.Graph, gc1.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            Dupa.Text += "\nWysłanie 2 grafów z 6 wierz: " + GraphOperation.IsBijective(gc6.Graph, gc7.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            Dupa.Text += "\nWysłanie 2 grafów z 6 wierz wersja 2: " + GraphOperation.IsBijective(gc6.Graph, gc8.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            Dupa.Text += "\nGrafy z 9 wierzchołkami: " + GraphOperation.IsBijective(gc9.Graph, gc10.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            List<List<int>> lista1 = new List<List<int>>();
+            List<List<int>> lista2 = new List<List<int>>();
+            Random rand = new Random();
+            int n = 1000;
+            for (int i = 0; i < n; i++)
+            {
+                lista1.Add(new List<int>());
+                lista2.Add(new List<int>());
+                for (int j = 0; j < n/1000; j++)
+                {
+                    lista1[i].Add(rand.Next(2, n ));
+                    lista2[i].Add(rand.Next(2, n )/2);
+                }
+
+            }
+             gc1 = new GraphController(this, lista1);
+            gc2 = new GraphController(this, lista2);
         }
+        GraphController gc2, gc1;
         private void Create_GraphView()
         {
             graphViewerGrid.ClipToBounds = true;
@@ -81,6 +90,16 @@ namespace DGI
         public static void ChangeProgress(int val)
         {
             mainWindow.progressBar.Value = val;
+        }
+
+        public static void ChangeProgresDupy(int val)
+        {
+            mainWindow.progresDupa.Value = val;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            GraphCompare.AreBijective(gc1, gc2);
         }
     }
 }

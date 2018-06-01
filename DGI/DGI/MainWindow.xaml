@@ -24,11 +24,13 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Grid Height="470">
+        <Button Content="DUPNADUPA" Click="Button_Click" ></Button>
+        <Grid MinHeight="300">
             <TextBox Name="Dupa">
                 
             </TextBox>
         </Grid>
+        <ProgressBar Height="40" Width="775" Name="progresDupa" Minimum="0" Maximum="100"></ProgressBar>
         <ProgressBar Height="40" Width="775" Name="progressBar" Minimum="0" Maximum="100"></ProgressBar>
         <TextBlock Name="textbox" Text="TEST" TextAlignment="Center" Height="20" Width="775" VerticalAlignment="Bottom" />
     </StackPanel>
