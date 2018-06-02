@@ -39,58 +39,58 @@ namespace DGI.CoreClasses
             lista4_5_a1.Add(new List<int>());
             lista4_5_a1.Add(new List<int>());
             lista4_5_a1.Add(new List<int>());
-            lista4_5_a1[0].Add(2);
-            lista4_5_a1[0].Add(4);
-            lista4_5_a1[1].Add(3);
-            lista4_5_a1[2].Add(1);
-            lista4_5_a1[3].Add(3);
+            lista4_5_a1[0].Add(1);
+            lista4_5_a1[0].Add(3);
+            lista4_5_a1[1].Add(2);
+            lista4_5_a1[2].Add(0);
+            lista4_5_a1[3].Add(2);
 
             lista4_5_a2 = new List<List<int>>();
             lista4_5_a2.Add(new List<int>());
             lista4_5_a2.Add(new List<int>());
             lista4_5_a2.Add(new List<int>());
             lista4_5_a2.Add(new List<int>());
-            lista4_5_a2[0].Add(2);
-            lista4_5_a2[1].Add(3);
-            lista4_5_a2[2].Add(1);
-            lista4_5_a2[2].Add(4);
-            lista4_5_a2[3].Add(2);
+            lista4_5_a2[0].Add(1);
+            lista4_5_a2[1].Add(2);
+            lista4_5_a2[2].Add(0);
+            lista4_5_a2[2].Add(3);
+            lista4_5_a2[3].Add(1);
 
             lista4_6_a1 = new List<List<int>>();
             lista4_6_a1.Add(new List<int>());
             lista4_6_a1.Add(new List<int>());
             lista4_6_a1.Add(new List<int>());
             lista4_6_a1.Add(new List<int>());
-            lista4_6_a1[0].Add(2);
-            lista4_6_a1[0].Add(4);
-            lista4_6_a1[1].Add(3);
-            lista4_6_a1[2].Add(1);
-            lista4_6_a1[2].Add(4);
-            lista4_6_a1[3].Add(2);
+            lista4_6_a1[0].Add(1);
+            lista4_6_a1[0].Add(3);
+            lista4_6_a1[1].Add(2);
+            lista4_6_a1[2].Add(0);
+            lista4_6_a1[2].Add(3);
+            lista4_6_a1[3].Add(1);
 
             lista4_6_a2 = new List<List<int>>();
             lista4_6_a2.Add(new List<int>());
             lista4_6_a2.Add(new List<int>());
             lista4_6_a2.Add(new List<int>());
             lista4_6_a2.Add(new List<int>());
-            lista4_6_a2[0].Add(2);
+            lista4_6_a2[0].Add(1);
+            lista4_6_a2[1].Add(2);
             lista4_6_a2[1].Add(3);
-            lista4_6_a2[1].Add(4);
-            lista4_6_a2[2].Add(1);
-            lista4_6_a2[3].Add(1);
-            lista4_6_a2[3].Add(3);
+            lista4_6_a2[2].Add(0);
+            lista4_6_a2[3].Add(0);
+            lista4_6_a2[3].Add(2);
 
             lista4_6_b1 = new List<List<int>>();
             lista4_6_b1.Add(new List<int>());
             lista4_6_b1.Add(new List<int>());
             lista4_6_b1.Add(new List<int>());
             lista4_6_b1.Add(new List<int>());
+            lista4_6_b1[0].Add(1);
             lista4_6_b1[0].Add(2);
-            lista4_6_b1[0].Add(3);
-            lista4_6_b1[1].Add(3);
-            lista4_6_b1[2].Add(1);
-            lista4_6_b1[2].Add(4);
-            lista4_6_b1[3].Add(2);
+            lista4_6_b1[1].Add(2);
+            lista4_6_b1[2].Add(0);
+            lista4_6_b1[2].Add(3);
+            lista4_6_b1[3].Add(1);
             #endregion
 
             #region 6 wierzchołków
@@ -101,13 +101,13 @@ namespace DGI.CoreClasses
             lista6_7_a1.Add(new List<int>());
             lista6_7_a1.Add(new List<int>());
             lista6_7_a1.Add(new List<int>());
-            lista6_7_a1[0].Add(3);
-            lista6_7_a1[1].Add(1);
-            lista6_7_a1[1].Add(4);
-            lista6_7_a1[2].Add(4);
-            lista6_7_a1[2].Add(5); // 5
-            lista6_7_a1[4].Add(2);
-            lista6_7_a1[4].Add(6);
+            lista6_7_a1[0].Add(2);
+            lista6_7_a1[1].Add(0);
+            lista6_7_a1[1].Add(3);
+            lista6_7_a1[2].Add(3);
+            lista6_7_a1[2].Add(4); // 5
+            lista6_7_a1[4].Add(1);
+            lista6_7_a1[4].Add(5);
 
             lista6_7_a2 = new List<List<int>>();
             lista6_7_a2.Add(new List<int>());
@@ -116,13 +116,13 @@ namespace DGI.CoreClasses
             lista6_7_a2.Add(new List<int>());
             lista6_7_a2.Add(new List<int>());
             lista6_7_a2.Add(new List<int>());
-            lista6_7_a2[1].Add(3);
-            lista6_7_a2[2].Add(4);
-            lista6_7_a2[2].Add(6);
-            lista6_7_a2[3].Add(1);
-            lista6_7_a2[3].Add(5); // 5
-            lista6_7_a2[4].Add(2);
-            lista6_7_a2[4].Add(6);
+            lista6_7_a2[1].Add(2);
+            lista6_7_a2[2].Add(3);
+            lista6_7_a2[2].Add(5);
+            lista6_7_a2[3].Add(0);
+            lista6_7_a2[3].Add(4); // 5
+            lista6_7_a2[4].Add(1);
+            lista6_7_a2[4].Add(5);
 
             lista6_7_b1 = new List<List<int>>();
             lista6_7_b1.Add(new List<int>());
@@ -131,13 +131,13 @@ namespace DGI.CoreClasses
             lista6_7_b1.Add(new List<int>());
             lista6_7_b1.Add(new List<int>());
             lista6_7_b1.Add(new List<int>());
-            lista6_7_b1[1].Add(3);
+            lista6_7_b1[1].Add(2);
+            lista6_7_b1[2].Add(3);
             lista6_7_b1[2].Add(4);
-            lista6_7_b1[2].Add(5);
-            lista6_7_b1[4].Add(2);
-            lista6_7_b1[4].Add(6); // 5
-            lista6_7_b1[5].Add(1);
-            lista6_7_b1[5].Add(4);
+            lista6_7_b1[4].Add(1);
+            lista6_7_b1[4].Add(5); // 5
+            lista6_7_b1[5].Add(0);
+            lista6_7_b1[5].Add(3);
             #endregion
 
             #region 9 wierzchołków
@@ -152,15 +152,15 @@ namespace DGI.CoreClasses
             lista9_9_a1.Add(new List<int>());
             lista9_9_a1.Add(new List<int>());
             lista9_9_a1.Add(new List<int>());
+            lista9_9_a1[0].Add(4);
             lista9_9_a1[0].Add(5);
-            lista9_9_a1[0].Add(6);
-            lista9_9_a1[1].Add(1);
-            lista9_9_a1[1].Add(6);
-            lista9_9_a1[1].Add(7); // 5
-            lista9_9_a1[2].Add(2);
+            lista9_9_a1[1].Add(0);
+            lista9_9_a1[1].Add(5);
+            lista9_9_a1[1].Add(6); // 5
+            lista9_9_a1[2].Add(1);
+            lista9_9_a1[2].Add(5);
             lista9_9_a1[2].Add(6);
-            lista9_9_a1[2].Add(7);
-            lista9_9_a1[8].Add(4);
+            lista9_9_a1[8].Add(3);
 
             lista9_9_a2 = new List<List<int>>();
             lista9_9_a2.Add(new List<int>());
@@ -172,15 +172,15 @@ namespace DGI.CoreClasses
             lista9_9_a2.Add(new List<int>());
             lista9_9_a2.Add(new List<int>());
             lista9_9_a2.Add(new List<int>());
-            lista9_9_a2[1].Add(9);
-            lista9_9_a2[2].Add(1);
-            lista9_9_a2[2].Add(5);
-            lista9_9_a2[2].Add(7);
-            lista9_9_a2[4].Add(1); // 5
+            lista9_9_a2[1].Add(8);
+            lista9_9_a2[2].Add(0);
+            lista9_9_a2[2].Add(4);
+            lista9_9_a2[2].Add(6);
+            lista9_9_a2[4].Add(0); // 5
+            lista9_9_a2[4].Add(6);
             lista9_9_a2[4].Add(7);
-            lista9_9_a2[4].Add(8);
-            lista9_9_a2[7].Add(4);
-            lista9_9_a2[7].Add(7);
+            lista9_9_a2[7].Add(3);
+            lista9_9_a2[7].Add(6);
             #endregion
         }
 
