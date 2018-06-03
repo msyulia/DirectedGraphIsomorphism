@@ -60,14 +60,14 @@ namespace DGI
             List<List<int>> lista1 = new List<List<int>>();
             List<List<int>> lista2 = new List<List<int>>();
             Random rand = new Random();
-            int n = 1000;
+            int n = 100;
             for (int i = 0; i < n; i++)
             {
                 lista1.Add(new List<int>());
                 lista2.Add(new List<int>());
-                for (int j = 0; j < n/1000; j++)
+                for (int j = 0; j < 2; j++)
                 {
-                    lista1[i].Add(rand.Next(2, n ));
+                    lista1[i].Add(rand.Next(0, n));
                     lista2[i].Add(rand.Next(2, n )/2);
                 }
 
@@ -99,6 +99,9 @@ namespace DGI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            gc1 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a1);
+            gc2 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a2);
+            System.Threading.Thread.Sleep(1000);
             GraphCompare.AreBijective(gc1, gc2);
         }
     }

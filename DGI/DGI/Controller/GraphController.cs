@@ -62,7 +62,6 @@ namespace DGI.Controller
 
         private void worker_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
-            Console.WriteLine("\n\n\n*** KONIEC!!! ***\n\n\n");
             backgroundWorker = null;
         }
 

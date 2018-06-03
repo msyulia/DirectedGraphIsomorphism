@@ -60,7 +60,7 @@ namespace DGI.CoreClasses
         private static void worker_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
             stopWatch.Stop();
-            Console.WriteLine("Wszystko zajęło: " + stopWatch.ElapsedMilliseconds + " s\nWynik: " + checkingResult);
+            Console.WriteLine("Wszystko zajęło: " + stopWatch.ElapsedMilliseconds + " ms\nWynik: " + checkingResult);
             // stopWatch = null;
             backgroundWorker = null;
         }
@@ -68,7 +68,8 @@ namespace DGI.CoreClasses
         private static void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             //MainWindow.ChangeProgresDupy(e.ProgressPercentage);
-        }
+            // if(progressTimes%10 ==0) Console.WriteLine("Reportuje progres {0}", progressTimes);
+        } 
 
 
         private static bool areBijective(GraphModel G1, GraphModel G2, int current, bool[] used, List<int> newOrder)

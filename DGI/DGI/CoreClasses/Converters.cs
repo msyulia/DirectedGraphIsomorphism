@@ -18,7 +18,7 @@ namespace DGI.CoreClasses
             foreach (var row in list)
             {
                 foreach (var item in row)
-                    adjMtrx[line, item - 1] = 1;
+                    adjMtrx[line, item] = 1;
                 line++;
             }
             return adjMtrx;
@@ -33,7 +33,7 @@ namespace DGI.CoreClasses
                 list.Add(new List<int>());
                 for (int j = 0; j < matrix.GetLength(1); j++)
                     if (matrix[i, j] == 1)
-                        list[i].Add(j + 1);
+                        list[i].Add(j);
             }
             return list;
         }
@@ -54,7 +54,7 @@ namespace DGI.CoreClasses
                 int j = 0;
                 foreach (var item in actual[orderN]) { consideredLine[j] = item; j++; }
                 for (int k = 0; k < consideredLine.Length; k++)
-                    for (int l = 0; l < order.Count; l++) if (order[l] == (consideredLine[k] - 1)) { list[i].Add(l + 1); break; }
+                    for (int l = 0; l < order.Count; l++) if (order[l] == (consideredLine[k] )) { list[i].Add(l); break; }
             }
             return list;
         }
