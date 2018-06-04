@@ -152,5 +152,18 @@ namespace DGI
 
             CommonOperations2(tuple.Item1, list);
         }
+
+        public static void ChangeProgresDupy(int val)
+        {
+            mainWindow.progresDupa.Value = val;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            gc1 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a1);
+            gc2 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a2);
+            System.Threading.Thread.Sleep(1000);
+            GraphCompare.AreBijective(gc1, gc2);
+        }
     }
 }

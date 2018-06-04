@@ -31,6 +31,10 @@ namespace DGI.CoreClasses
         public static List<List<int>> lista9_9_a1 { get; private set; }
         public static List<List<int>> lista9_9_a2 { get; private set; }
 
+        public static List<List<int>> lista45_70_a1 { get; private set; }
+        public static List<List<int>> lista44_70_a2 { get; private set; }
+
+
         static ExampleAdjacencyLists()
         {
             #region 4 wierzchołki

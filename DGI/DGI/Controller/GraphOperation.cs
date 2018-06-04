@@ -93,7 +93,7 @@ namespace DGI.Controller
 
             stopwatch.Stop();
 
-            result += stopwatch.ElapsedMilliseconds;
+            result += stopwatch.ElapsedMilliseconds / 1000;
             return result;
         }
 
