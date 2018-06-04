@@ -79,7 +79,7 @@ namespace DGI.AdditionalWindows
                 combo.Name = "comboBox_" + i;
                 combo.HorizontalContentAlignment = HorizontalAlignment.Center;
                 combo.SelectionChanged += ComboBox_SelectionChanged;
-                for (int j = 0; j < size; j++) combo.Items.Add(j);
+                for (int j = 0; j <= size; j++) combo.Items.Add(j);
                 combo.SelectedIndex = 0;
                 g.Children.Add(combo);
                 Grid.SetColumn(combo, 1);
@@ -95,9 +95,31 @@ namespace DGI.AdditionalWindows
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int howMany = Convert.ToInt32((sender as ComboBox).SelectedItem as string);
-            Console.WriteLine(howMany + "\n\n");
-            int i = 0;
+            ComboBox combo = (ComboBox) sender;
+            object selectedItem = combo.SelectedItem;
+            int gridIndex = Convert.ToInt32(combo.Name.Split('_')[1]);
+            int j = 0;
+            Border b = new Border();
+            foreach (var child in containerStackPanel.Children){if (j == gridIndex) { b = (Border)child; break; }j++;}
+
+            Grid grid = (Grid) b.Child;
+            if (grid == null) return;
+
+            WrapPanel wrap = new WrapPanel();
+            foreach (var item in grid.Children)
+                if(item is WrapPanel)
+                    wrap = (WrapPanel) item;
+
+            wrap.Children.RemoveRange(0,wrap.Children.Count);
+            for (int i = 0; i < (int) selectedItem; i++)
+            {
+                TextBox tb = new TextBox();
+                tb.Name = "textBox_" + gridIndex + "_" + i;
+                tb.Width = 22;
+                tb.MaxLength = 2;
+                tb.Margin = new Thickness(2, 2, 0, 0);
+                wrap.Children.Add(tb);
+            }
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)

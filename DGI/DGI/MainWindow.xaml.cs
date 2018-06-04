@@ -60,6 +60,7 @@ namespace DGI
             //    Dupa.Text += "\nWysłanie 2 grafów z 6 wierz: " + GraphOperation.IsBijective(gc6.Graph, gc7.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
             //    Dupa.Text += "\nWysłanie 2 grafów z 6 wierz wersja 2: " + GraphOperation.IsBijective(gc6.Graph, gc8.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
             //    Dupa.Text += "\nGrafy z 9 wierzchołkami: " + GraphOperation.IsBijective(gc9.Graph, gc10.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            
         }
 
         private void Setup_GraphViewers()
@@ -128,7 +129,8 @@ namespace DGI
             AdditionalWindows.TypingInAdjMatrixSize window = new AdditionalWindows.TypingInAdjMatrixSize();
             IsEnabled = false;
             int a = window.ReturnSizeOfMatrix(this);
-            Console.WriteLine(a);
+            AdditionalWindows.AdjList adl = new AdditionalWindows.AdjList(a);
+            List<List<int>> lista = adl.ReturnAdjList(this);
         }
     }
 }
