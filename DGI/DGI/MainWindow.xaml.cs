@@ -45,22 +45,22 @@ namespace DGI
             graph_1 = new Graph();
             graph_2 = new Graph();
 
-            WFH1.Child = viewer_1;
-            WFH2.Child = viewer_2;
+            Setup_GraphViewers();
         }
 
         private void Setup_GraphViewers()
         {
-            viewer_1 = new GViewer();
-            viewer_2 = new GViewer();
+            viewer_1 = new GViewer
+            {
+                Graph = graph_1
+            };
 
-            //Testowe grafy jak się zrobi tworzenie grafu z poziomu aplikacji to tu trzeba podmienić
-            // graph_1 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(10, 3));
-            // graph_2 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(15, 5));
-
-            // viewer_2.Graph = graph_2;
-
-            // _mainWindowInstance.WFH2.Child = viewer_2;
+            viewer_2 = new GViewer
+            {
+                Graph = graph_2
+            };
+            _mainWindowInstance.WFH1.Child = viewer_1;
+            _mainWindowInstance.WFH2.Child = viewer_2;
         }
 
         private void SourceCodeButton_Click(object sender, RoutedEventArgs e)
@@ -139,7 +139,7 @@ namespace DGI
             CommonOperations2(tuple.Item1, matrix);
         }
 
-        private void adjListMenuItem_Click(object sender, RoutedEventArgs e)
+        private void AdjListMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Tuple<int, int> tuple = CommonOperations1();
             if (tuple == null) { IsEnabled = true; return; }

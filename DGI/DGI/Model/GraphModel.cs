@@ -20,6 +20,16 @@ namespace DGI.Model
         int edgeCount;
         public int EdgeCount { get { return edgeCount; } set { edgeCount = value; } }
 
+        public int VerticesCount { get { return AdjacencyList.Count; } }
+
+        public int this[int i, int j]
+        {
+            get
+            {
+                return adjMtrx[i, j];
+            }
+        }
+
         List<VerticeModel> vertices;
         public List<VerticeModel> Vertices { get { return vertices; } }
 

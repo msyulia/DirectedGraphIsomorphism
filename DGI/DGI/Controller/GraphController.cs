@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using DGI.Model;
 
@@ -87,6 +86,51 @@ namespace DGI.Controller
                 if (graph.AdjacencyMatrix[i, row] == 1) inEdg++;
             }
             return Tuple.Create(inEdg, outEdg);
+        }
+
+        public async Task<GraphModel> LoadGraph(string path)
+        {
+            StreamReader sr = new StreamReader(path);
+            List<List<int>> adjList = new List<List<int>>();
+            List<int> temp;
+            string line;
+            while (!sr.EndOfStream)
+            {
+                temp = new List<int>();
+                line = await sr.ReadLineAsync();
+
+                for (int i = 0; i < line.Length; i++)
+                {
+                    if (line[i] != ',')
+                    {
+                        temp.Add(line[i]);
+                    }
+                }
+                adjList.Add(temp);
+            }
+
+            return new GraphModel(adjList);
+        }
+
+        public async void SaveGraph(GraphModel graph,string path)
+        {
+            StreamWriter sw = new StreamWriter(path);
+
+            for (int i = 0; i < graph.VerticesCount; i++)
+            {
+                for (int j = 0; j < graph.VerticesCount; j++)
+                {
+                    if (graph[i,j] != 0)
+                    {
+                        await sw.WriteAsync(graph[i, j].ToString());
+                    }
+                    if (j < graph.VerticesCount - 1)
+                    {
+                        await sw.WriteAsync(",");
+                    }
+                }
+                await sw.WriteLineAsync();
+            }
         }
     }
 }

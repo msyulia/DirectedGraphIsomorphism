@@ -29,7 +29,7 @@ namespace DGI.Controller
                 {
                     a++; //do wywalenia
                     List<List<int>> outcome = Converters.NewAdjacencyListOrder(newOrder, G2.AdjacencyList);
-                    if (compareTwoLists(outcome, G1.AdjacencyList)) return true;
+                    if (CompareTwoLists(outcome, G1.AdjacencyList)) return true;
                     else return false;
                 }
 
@@ -49,7 +49,7 @@ namespace DGI.Controller
             return false;
         }
 
-        private static bool compareTwoLists(List<List<int>> list1, List<List<int>> list2)
+        private static bool CompareTwoLists(List<List<int>> list1, List<List<int>> list2)
         {
             foreach (var item in list2)
                 item.Sort();
