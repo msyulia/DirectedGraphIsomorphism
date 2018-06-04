@@ -72,6 +72,9 @@
     <Compile Include="AdditionalWindows\AdjMtrx.xaml.cs">
       <DependentUpon>AdjMtrx.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdditionalWindows\ChooseViewer.xaml.cs">
+      <DependentUpon>ChooseViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdditionalWindows\TypingInAdjMatrixSize.xaml.cs">
       <DependentUpon>TypingInAdjMatrixSize.xaml</DependentUpon>
     </Compile>
@@ -90,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdditionalWindows\AdjMtrx.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdditionalWindows\ChooseViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
