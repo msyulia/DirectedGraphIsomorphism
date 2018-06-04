@@ -1,4 +1,5 @@
-﻿using DGI.Model;
+﻿using DGI.Controller;
+using DGI.Model;
 using Microsoft.Msagl.Drawing;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,25 @@ namespace DGI.CoreClasses
     {
         public static Graph GraphModelToMSAGLGraph(GraphModel sourceGraph)
         {
+            Graph result = new Graph();
+            int counter = 0;
+            for (int i = 0; i < sourceGraph.AdjacencyList.Count; i++)
+            {
+                result.AddNode(i.ToString());
+            }
+            foreach (List<int> List in sourceGraph.AdjacencyList)
+            {
+                foreach (int value in List)
+                {
+                    result.AddEdge(counter.ToString(), value.ToString());
+                }
+                counter++;
+            }
+            return result;
+        }
+        public static Graph GraphModelToMSAGLGraph(GraphController graphController)
+        {
+            GraphModel sourceGraph = graphController.Graph;
             Graph result = new Graph();
             int counter = 0;
             for (int i = 0; i < sourceGraph.AdjacencyList.Count; i++)
@@ -86,11 +106,8 @@ namespace DGI.CoreClasses
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Console.WriteLine(value.ToString());
             double val = (double)value;
-            Console.WriteLine(val);
             val = ((double)3 / 5) * val;
-            Console.WriteLine(val);
             return val; 
         }
 

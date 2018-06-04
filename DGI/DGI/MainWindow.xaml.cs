@@ -9,6 +9,7 @@ using DGI.Model;
 using System.Threading;
 using System;
 using System.Collections.Generic;
+using DGI.AdditionalWindows;
 
 namespace DGI
 {
@@ -28,39 +29,24 @@ namespace DGI
         private Graph graph_1;
         private Graph graph_2;
 
+        private GraphController graphController_1;
+        private GraphController graphController_2;
+
         private static MainWindow _mainWindowInstance;
 
         public MainWindow()
         {
             InitializeComponent();
             _mainWindowInstance = this;
+            viewer_1 = new GViewer();
+            viewer_2 = new GViewer();
+            graphController_1 = new GraphController();
+            graphController_2 = new GraphController();
+            graph_1 = new Graph();
+            graph_2 = new Graph();
 
-            Setup_GraphViewers();
-
-            //GraphController gc1 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a1);
-            //GraphController gc2 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a2);
-
-            //GraphController gc3 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a1);
-            //GraphController gc4 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a2);
-            //GraphController gc5 = new GraphController(this, ExampleAdjacencyLists.lista4_6_b1);
-
-            //GraphController gc6 = new GraphController(this, ExampleAdjacencyLists.lista6_7_a1);
-            //GraphController gc7 = new GraphController(this, ExampleAdjacencyLists.lista6_7_a2);
-            //GraphController gc8 = new GraphController(this, ExampleAdjacencyLists.lista6_7_b1);
-
-            //GraphController gc9 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a1);
-            //GraphController gc10 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a2);
-
-            //    int a = 0; // ilość sprawdzonych kombinacji
-            //    Dupa.Text += "Pierwszy zestaw: " + GraphOperation.IsBijective(gc1.Graph, gc2.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nDrugi zestaw: " + GraphOperation.IsBijective(gc3.Graph, gc4.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nZestaw niepoprawny 6 krawędzi: " + GraphOperation.IsBijective(gc4.Graph, gc5.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nPomieszanie zestawów 1 i 2: " + GraphOperation.IsBijective(gc1.Graph, gc4.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nWysłanie tego samego grafu: " + GraphOperation.IsBijective(gc1.Graph, gc1.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nWysłanie 2 grafów z 6 wierz: " + GraphOperation.IsBijective(gc6.Graph, gc7.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nWysłanie 2 grafów z 6 wierz wersja 2: " + GraphOperation.IsBijective(gc6.Graph, gc8.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nGrafy z 9 wierzchołkami: " + GraphOperation.IsBijective(gc9.Graph, gc10.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            
+            WFH1.Child = viewer_1;
+            WFH2.Child = viewer_2;
         }
 
         private void Setup_GraphViewers()
@@ -70,11 +56,11 @@ namespace DGI
 
             //Testowe grafy jak się zrobi tworzenie grafu z poziomu aplikacji to tu trzeba podmienić
             // graph_1 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(10, 3));
-            graph_2 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(15, 5));
+            // graph_2 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(15, 5));
 
-            viewer_2.Graph = graph_2;
+            // viewer_2.Graph = graph_2;
 
-            _mainWindowInstance.WFH2.Child = viewer_2;
+            // _mainWindowInstance.WFH2.Child = viewer_2;
         }
 
         private void SourceCodeButton_Click(object sender, RoutedEventArgs e)
@@ -105,32 +91,66 @@ namespace DGI
             }
         }
 
+        private Tuple<int, int> CommonOperations1()
+        {
+            IsEnabled = false;
+            ChooseViewer chv = new ChooseViewer();
+            int index = chv.ReturnViewerIndex();
+            if (index == -1) { return null; }
+
+            TypingInAdjMatrixSize window = new TypingInAdjMatrixSize();
+            int size = window.ReturnSizeOfMatrix();
+            if (size > 30 || size < 1) { if (size > 30) { MessageBox.Show("Niestety, z powodów technicznych nie obsługujemy grafów większych niż 30 elementów, proszę wczytać graf z pliku"); } return null; }
+
+            return new Tuple<int, int>(index, size);
+        }
+
+        /// <param name="WFHIndex">Index okna WFHI. 0 to pierwsze okno, 1 to po prawej, 
+        ///         pobierane przez okno ChooseViewer.xaml</param>
+        /// <param name="listOrMatrix">lista lub macierz sąsiedztwa</param>
+        private void CommonOperations2(int WFHIndex, object listOrMatrix)
+        {
+            GViewer gViewerRef = WFHIndex == 0 ? viewer_1 : viewer_2;
+            GraphController graphControllerReference = WFHIndex == 0 ? graphController_1 : graphController_2;
+
+            if(listOrMatrix is int[,]) graphControllerReference = new GraphController(this, (int[,]) listOrMatrix);
+            else graphControllerReference = new GraphController(this, (List<List<int>>)listOrMatrix);
+            Thread.Sleep(1000);
+
+            Graph graphRef = WFHIndex == 0 ? graph_1 : graph_2;
+            graphRef = Converters.GraphModelToMSAGLGraph(graphControllerReference);
+            gViewerRef.Graph = graphRef;
+            WindowsFormsHost wfhReference = WFHIndex == 0 ? WFH1 : WFH1;
+            wfhReference.IsEnabled = true;
+            wfhReference.Child = gViewerRef;
+            IsEnabled = true;
+        }
+
         private void adjMatrixMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            AdditionalWindows.TypingInAdjMatrixSize window = new AdditionalWindows.TypingInAdjMatrixSize();
-            IsEnabled = false;
-            int a = window.ReturnSizeOfMatrix(this);
-            if(a > 0)
-            {
-                AdditionalWindows.AdjMtrx am = new AdditionalWindows.AdjMtrx(a);
-                int[,] tab = am.ReturnAdjMatrix(this);
+            Tuple<int, int> tuple = CommonOperations1();
+            if(tuple == null) { IsEnabled = true; return; }
+            int size = tuple.Item2;
 
-                GraphModel gm = new GraphModel(tab);
-                graph_1 = Converters.GraphModelToMSAGLGraph(gm);
+            AdjMtrx adjacencyMatrix = new AdjMtrx(size);
+            int[,] matrix = adjacencyMatrix.ReturnAdjMatrix();
+            if (matrix == null) { IsEnabled = true; return; }
 
-                viewer_1.Graph = graph_1;
-                _mainWindowInstance.WFH1.Child = viewer_1;
-            }
-
+            CommonOperations2(tuple.Item1, matrix);
         }
 
         private void adjListMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            AdditionalWindows.TypingInAdjMatrixSize window = new AdditionalWindows.TypingInAdjMatrixSize();
-            IsEnabled = false;
-            int a = window.ReturnSizeOfMatrix(this);
-            AdditionalWindows.AdjList adl = new AdditionalWindows.AdjList(a);
-            List<List<int>> lista = adl.ReturnAdjList(this);
+            Tuple<int, int> tuple = CommonOperations1();
+            if (tuple == null) { IsEnabled = true; return; }
+            GViewer gViewerReference = tuple.Item1 == 0 ? viewer_1 : viewer_2;
+            int size = tuple.Item2;
+
+            AdjList adjacencyList = new AdjList(size);
+            List<List<int>> list = adjacencyList.ReturnAdjList();
+            if (list == null) { IsEnabled = true; return; }
+
+            CommonOperations2(tuple.Item1, list);
         }
     }
 }

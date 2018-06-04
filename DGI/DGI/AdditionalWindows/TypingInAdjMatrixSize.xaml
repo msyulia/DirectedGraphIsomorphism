@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DGI.AdditionalWindows"
         mc:Ignorable="d"
-        Title="Wpisz rozmiar macierzy sąsiedztwa" Height="130" Width="300" ResizeMode="NoResize"
-        Closing="Window_Closing">
+        Title="Wpisz ilość wierzchołków" Height="130" Width="300" ResizeMode="NoResize">
     <StackPanel>
         <Grid>
             <TextBox Margin="25,15" Height="25" Name="sizeOfMatrixTextBox">

@@ -27,19 +27,13 @@ namespace DGI.AdditionalWindows
             InitializeComponent();
             this.size = size;
 
-            Height = size * 35;
+            Height = size * 35 +100;
         }
 
 
-        public List<List<int>> ReturnAdjList(MainWindow mw)
+        public List<List<int>> ReturnAdjList()
         {
             _list = new List<List<int>>();
-            if (size > 25)
-            {
-                MessageBox.Show("Niestety, lista o podanych rozmiarach możemy przetworzyć tylko z pliku, za utrudnienia przepraszamy!");
-                this.Close();
-                return null;
-            }
             ListFramework();
             base.ShowDialog();
             return _list;
@@ -130,6 +124,37 @@ namespace DGI.AdditionalWindows
 
         private void acceptButton_Click(object sender, RoutedEventArgs e)
         {
+            List<List<int>> toReturn = new List<List<int>>();
+            int index = 0;
+            foreach (Border border in containerStackPanel.Children)
+            {
+                toReturn.Add(new List<int>());
+                Grid grid = (Grid)border.Child;
+                WrapPanel wrapPanel = new WrapPanel();
+                foreach (var item in grid.Children) if (item is WrapPanel) wrapPanel = (WrapPanel)item;
+
+                foreach (TextBox textBox in wrapPanel.Children)
+                {
+                    string text = textBox.Text;
+                    try
+                    {
+                        int val = Convert.ToInt32(text);
+                        if (val >= size || val < 0) throw new Exception();
+                        toReturn[index].Add( val);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Podano niedozwoloną wartość!");
+                        _list = null;
+                        return;
+                    }
+                }
+                index++;
+            }
+            for (int i = 0; i < toReturn.Count; i++)
+                toReturn[i] = toReturn[i].Distinct().ToList();
+
+            _list = toReturn;
             Close();
         }
     }

@@ -10,27 +10,43 @@
         Title="Izomorfizm grafów" Height="610" Width="800" x:Name="mainWindow">
     <Window.Resources>
         <local:WidthConverter x:Key="widthConverter"/>
+        <Style TargetType="MenuItem" x:Key="menuItem">
+            <Setter Property="Width" Value="90" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="0.5" />
+            <Setter Property="BorderBrush" Value="Gray" />
+        </Style>
+        <Style TargetType="MenuItem" x:Key="menuItemInside">
+            <Setter Property="Width" Value="250" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+
+        </Style>
     </Window.Resources>
     <StackPanel>
-        <DockPanel HorizontalAlignment="Left" Height="25" LastChildFill="False" Margin="0,0,-8,0" VerticalAlignment="Top" Width="800">
+        <DockPanel Height="25" LastChildFill="False" Margin="0,0,-8,0" VerticalAlignment="Top">
             <Menu Height="25" VerticalAlignment="Top" Width="792">
-                <MenuItem Header="Plik" Height="25" Width="30">
-                    <MenuItem Header="Nowy" HorizontalAlignment="Left" Height="20" Width="150">
-                        <MenuItem Header="Lista Sąsiedztwa" x:Name="adjListMenuItem" Click="adjListMenuItem_Click"/>
-                        <MenuItem Header="Macierz Sąsiedztwa" x:Name="adjMatrixMenuItem" Click="adjMatrixMenuItem_Click"/>
+                <MenuItem Header="Plik" Style="{StaticResource menuItem}">
+                    <MenuItem Header="Nowy" Style="{StaticResource menuItemInside}" >
+                        <MenuItem Header="Lista Sąsiedztwa" Style="{StaticResource menuItemInside}" x:Name="adjListMenuItem" Click="adjListMenuItem_Click"/>
+                        <MenuItem Header="Macierz Sąsiedztwa" Style="{StaticResource menuItemInside}" x:Name="adjMatrixMenuItem" Click="adjMatrixMenuItem_Click"/>
                     </MenuItem>
-                    <MenuItem Header="Otwórz" HorizontalAlignment="Left" Height="20" Width="150" />
-                    <MenuItem Header="Zapisz" HorizontalAlignment="Left" Height="20" Width="150"/>
-                    <MenuItem Header="Zapisz jako" HorizontalAlignment="Left" Height="20" Width="150" />
-                    <MenuItem Header="-------------" HorizontalAlignment="Left" Height="20" Width="150" IsEnabled="False"/>
-                    <MenuItem Header="Wyjście" HorizontalAlignment="Left" Height="20" Width="150"/>
+                    <MenuItem Header="Otwórz" Style="{StaticResource menuItemInside}" />
+                    <MenuItem Header="Zapisz" Style="{StaticResource menuItemInside}" />
+                    <MenuItem Header="Zapisz jako" Style="{StaticResource menuItemInside}" />
+                    <MenuItem Header="-------------" Style="{StaticResource menuItemInside}" IsEnabled="False"/>
+                    <MenuItem Header="Wyjście" Style="{StaticResource menuItemInside}" />
                 </MenuItem>
-                <MenuItem Header="Widok"  Height="25" Width="50">
-                    <MenuItem Header="Pokaż Logi" HorizontalAlignment="Left" Height="20" Width="150" Click="ShowLogWindow_Click"></MenuItem>
+                <MenuItem Header="Widok"  Style="{StaticResource menuItem}">
+                    <MenuItem Header="Pokaż Logi" Style="{StaticResource menuItemInside}" Click="ShowLogWindow_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="Pomoc" Height="25" Width="50">
-                    <MenuItem Header="O Autorach" HorizontalAlignment="Left" Height="20" Width="150"/>
-                    <MenuItem Header="Źródło" HorizontalAlignment="Left" Height="20" Width="150" Click="SourceCodeButton_Click"/>
+                <MenuItem Header="Pomoc" Style="{StaticResource menuItem}">
+                    <MenuItem Header="O Autorach" Style="{StaticResource menuItemInside}" />
+                    <MenuItem Header="Źródło" Style="{StaticResource menuItemInside}" Click="SourceCodeButton_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
@@ -42,9 +58,9 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <WindowsFormsHost Grid.Row="1" Grid.Column="1" Name="WFH1">
+            <WindowsFormsHost Grid.Row="1" Grid.Column="0" Name="WFH1" IsEnabled="False">
             </WindowsFormsHost>
-            <WindowsFormsHost Grid.Row="0" Grid.Column="0" Name="WFH2">
+            <WindowsFormsHost Grid.Row="0" Grid.Column="1" Name="WFH2" IsEnabled="False">
             </WindowsFormsHost>
         </Grid>
         <WrapPanel>

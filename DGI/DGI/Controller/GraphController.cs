@@ -20,9 +20,16 @@ namespace DGI.Controller
             mainWindowRef = window;
             graph = new GraphModel(adjList);
             SetWorker();
-
         }
-
+        public GraphController(MainWindow window, int[,] adjMatrix)
+        {
+            mainWindowRef = window;
+            graph = new GraphModel(adjMatrix);
+            SetWorker();
+        }
+        public GraphController()
+        {
+        }
         #region Asynchronous, background work
         BackgroundWorker backgroundWorker;
 
@@ -61,7 +68,6 @@ namespace DGI.Controller
 
         private void Worker_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
-            Console.WriteLine("\n\n\n*** KONIEC!!! ***\n\n\n");
             backgroundWorker = null;
         }
 

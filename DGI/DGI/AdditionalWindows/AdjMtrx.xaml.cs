@@ -25,10 +25,10 @@ namespace DGI.AdditionalWindows
         {
             InitializeComponent();
             this.size = size;
-            if (size < 25)
+            if (size < 30)
             {
-                Width = (size + 1) * 35;
-                Height = (size + 1) * 43;
+                Width = (size + 1) * 39 + 90;
+                Height = (size + 1) * 48 + 90;
             }
             else
             {
@@ -38,15 +38,9 @@ namespace DGI.AdditionalWindows
 
         }
 
-        public int[,] ReturnAdjMatrix(MainWindow mw)
+        public int[,] ReturnAdjMatrix()
         {
             _matrix = new int[size, size];
-            if (size > 25)
-            {
-                MessageBox.Show("Niestety, macierz o podanych rozmiarach możemy przetworzyć tylko z pliku, za utrudnienia przepraszamy!");
-                this.Close();
-                return null;
-            }
             MatrixFramework();
             base.ShowDialog();
             return _matrix;
