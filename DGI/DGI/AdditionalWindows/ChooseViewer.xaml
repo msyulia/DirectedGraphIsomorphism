@@ -14,8 +14,8 @@
         </Style>
     </Window.Resources>
     <StackPanel>
-        <RadioButton x:Name="radioB1" IsChecked="True">Wyświetl w 1 oknie</RadioButton>
-        <RadioButton x:Name="radioB2" >Wyświetl w 2 oknie</RadioButton>
+        <RadioButton x:Name="radioB1" IsChecked="True">Pierwsze okno</RadioButton>
+        <RadioButton x:Name="radioB2" >Drugie okno</RadioButton>
 
         <WrapPanel  Margin="10,7" HorizontalAlignment="Center">
             <Button x:Name="cancelButton" Content="Anuluj" Style="{StaticResource buttonsStyle}" Template="{StaticResource buttonsTemplate}" Click="cancelButton_Click"></Button>

@@ -100,6 +100,23 @@ namespace DGI.CoreClasses
             }
             return list;
         }
+
+        public static GraphModel MSAGLGraphToGraphModel(Graph graph)
+        {
+            GraphModel result = new GraphModel();
+            List<List<int>> adjList = new List<List<int>>();
+            List<int> tempList; 
+            foreach (var node in graph.Nodes)
+            {
+                tempList = new List<int>();
+                foreach (var edge in node.Edges)
+                {
+                    tempList.Add(Convert.ToInt32(edge.Target));                    
+                }
+                adjList.Add(tempList);
+            }
+            return new GraphModel(adjList);
+        }
     }
 
     public class WidthConverter : IValueConverter

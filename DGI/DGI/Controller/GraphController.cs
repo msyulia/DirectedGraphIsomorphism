@@ -9,6 +9,8 @@ namespace DGI.Controller
 {
     public class GraphController
     {
+        private const int ASCII_OFFSET = 48;
+
         GraphModel graph;
         public GraphModel Graph { get { return graph; } private set { graph = value; } }
 
@@ -32,7 +34,7 @@ namespace DGI.Controller
         #region Asynchronous, background work
         BackgroundWorker backgroundWorker;
 
-        public void SetWorker( )
+        public void SetWorker()
         {
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.RunWorkerCompleted += Worker_Completed;
@@ -60,7 +62,7 @@ namespace DGI.Controller
                 var inOutEdg = CountInAndOutEdges(i);
                 graph.AddVertice(i, inOutEdg.Item1, inOutEdg.Item2);
 
-                if(i%20==0) backgroundWorker.ReportProgress(72 + (int)(oneStep * i));
+                if (i % 20 == 0) backgroundWorker.ReportProgress(72 + (int)(oneStep * i));
             }
             backgroundWorker.ReportProgress(100);
         }
@@ -88,7 +90,7 @@ namespace DGI.Controller
             return Tuple.Create(inEdg, outEdg);
         }
 
-        public async Task<GraphModel> LoadGraph(string path)
+        public static async Task<GraphModel> LoadGraphAsync(string path)
         {
             StreamReader sr = new StreamReader(path);
             List<List<int>> adjList = new List<List<int>>();
@@ -103,7 +105,7 @@ namespace DGI.Controller
                 {
                     if (line[i] != ',')
                     {
-                        temp.Add(line[i]);
+                        temp.Add(line[i] - ASCII_OFFSET);
                     }
                 }
                 adjList.Add(temp);
@@ -111,8 +113,30 @@ namespace DGI.Controller
 
             return new GraphModel(adjList);
         }
+        public static GraphModel LoadGraph(string path)
+        {
+            StreamReader sr = new StreamReader(path);
+            List<List<int>> adjList = new List<List<int>>();
+            List<int> temp;
+            string line;
+            while (!sr.EndOfStream)
+            {
+                temp = new List<int>();
+                line = sr.ReadLine();
 
-        public async void SaveGraph(GraphModel graph,string path)
+                for (int i = 0; i < line.Length; i++)
+                {
+                    if (line[i] != ',')
+                    {
+                        temp.Add(line[i] - ASCII_OFFSET);
+                    }
+                }
+                adjList.Add(temp);
+            }
+            sr.Close();
+            return new GraphModel(adjList);
+        }
+        public static async Task SaveGraphAsync(GraphModel graph, string path)
         {
             StreamWriter sw = new StreamWriter(path);
 
@@ -120,7 +144,7 @@ namespace DGI.Controller
             {
                 for (int j = 0; j < graph.VerticesCount; j++)
                 {
-                    if (graph[i,j] != 0)
+                    if (graph[i, j] != 0)
                     {
                         await sw.WriteAsync(graph[i, j].ToString());
                     }
@@ -131,6 +155,7 @@ namespace DGI.Controller
                 }
                 await sw.WriteLineAsync();
             }
+            sw.Close();
         }
     }
 }
