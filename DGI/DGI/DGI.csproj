@@ -78,13 +78,11 @@
     <Compile Include="Controller\GraphController.cs" />
     <Compile Include="Controller\GraphOperation.cs" />
     <Compile Include="CoreClasses\ExampleAdjacencyLists.cs" />
-    <Compile Include="LogWindow.xaml.cs">
+    <Compile Include="AdditionalWindows\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\GraphModel.cs" />
     <Compile Include="Model\VerticeModel.cs" />
-    <Compile Include="View\GraphView.cs" />
-    <Compile Include="View\View.cs" />
     <Page Include="AdditionalWindows\AdjList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -97,7 +95,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LogWindow.xaml">
+    <Page Include="AdditionalWindows\LogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

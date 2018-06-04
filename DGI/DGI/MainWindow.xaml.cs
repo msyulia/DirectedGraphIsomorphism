@@ -36,44 +36,20 @@ namespace DGI
             _mainWindowInstance = this;
 
             Setup_GraphViewers();
-
-            //GraphController gc1 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a1);
-            //GraphController gc2 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a2);
-
-            //GraphController gc3 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a1);
-            //GraphController gc4 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a2);
-            //GraphController gc5 = new GraphController(this, ExampleAdjacencyLists.lista4_6_b1);
-
-            //GraphController gc6 = new GraphController(this, ExampleAdjacencyLists.lista6_7_a1);
-            //GraphController gc7 = new GraphController(this, ExampleAdjacencyLists.lista6_7_a2);
-            //GraphController gc8 = new GraphController(this, ExampleAdjacencyLists.lista6_7_b1);
-
-            //GraphController gc9 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a1);
-            //GraphController gc10 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a2);
-
-            //    int a = 0; // ilość sprawdzonych kombinacji
-            //    Dupa.Text += "Pierwszy zestaw: " + GraphOperation.IsBijective(gc1.Graph, gc2.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nDrugi zestaw: " + GraphOperation.IsBijective(gc3.Graph, gc4.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nZestaw niepoprawny 6 krawędzi: " + GraphOperation.IsBijective(gc4.Graph, gc5.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nPomieszanie zestawów 1 i 2: " + GraphOperation.IsBijective(gc1.Graph, gc4.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nWysłanie tego samego grafu: " + GraphOperation.IsBijective(gc1.Graph, gc1.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nWysłanie 2 grafów z 6 wierz: " + GraphOperation.IsBijective(gc6.Graph, gc7.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nWysłanie 2 grafów z 6 wierz wersja 2: " + GraphOperation.IsBijective(gc6.Graph, gc8.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            //    Dupa.Text += "\nGrafy z 9 wierzchołkami: " + GraphOperation.IsBijective(gc9.Graph, gc10.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
-            
         }
 
         private void Setup_GraphViewers()
         {
-            viewer_1 = new GViewer();
-            viewer_2 = new GViewer();
+            viewer_1 = new GViewer
+            {
+                Graph = graph_1
+            };
 
-            //Testowe grafy jak się zrobi tworzenie grafu z poziomu aplikacji to tu trzeba podmienić
-            // graph_1 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(10, 3));
-            graph_2 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(15, 5));
-
-            viewer_2.Graph = graph_2;
-
+            viewer_2 = new GViewer
+            {
+                Graph = graph_2
+            };
+            _mainWindowInstance.WFH1.Child = viewer_1;
             _mainWindowInstance.WFH2.Child = viewer_2;
         }
 
@@ -105,7 +81,7 @@ namespace DGI
             }
         }
 
-        private void adjMatrixMenuItem_Click(object sender, RoutedEventArgs e)
+        private void AdjMatrixMenuItem_Click(object sender, RoutedEventArgs e)
         {
             AdditionalWindows.TypingInAdjMatrixSize window = new AdditionalWindows.TypingInAdjMatrixSize();
             IsEnabled = false;
@@ -124,7 +100,7 @@ namespace DGI
 
         }
 
-        private void adjListMenuItem_Click(object sender, RoutedEventArgs e)
+        private void AdjListMenuItem_Click(object sender, RoutedEventArgs e)
         {
             AdditionalWindows.TypingInAdjMatrixSize window = new AdditionalWindows.TypingInAdjMatrixSize();
             IsEnabled = false;
