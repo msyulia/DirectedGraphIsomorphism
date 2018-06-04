@@ -12,7 +12,10 @@
         <DockPanel HorizontalAlignment="Left" Height="25" LastChildFill="False" Margin="0,0,-8,0" VerticalAlignment="Top" Width="800">
             <Menu Height="25" VerticalAlignment="Top" Width="792">
                 <MenuItem Header="Plik" Height="25" Width="30">
-                    <MenuItem Header="Nowy" HorizontalAlignment="Left" Height="20" Width="150"/>
+                    <MenuItem Header="Nowy" HorizontalAlignment="Left" Height="20" Width="150">
+                        <MenuItem Header="Lista Sąsiedztwa" x:Name="adjListMenuItem" Click="adjListMenuItem_Click"/>
+                        <MenuItem Header="Macierz Sąsiedztwa" x:Name="adjMatrixMenuItem" Click="adjMatrixMenuItem_Click"/>
+                    </MenuItem>
                     <MenuItem Header="Otwórz" HorizontalAlignment="Left" Height="20" Width="150" />
                     <MenuItem Header="Zapisz" HorizontalAlignment="Left" Height="20" Width="150"/>
                     <MenuItem Header="Zapisz jako" HorizontalAlignment="Left" Height="20" Width="150" />
