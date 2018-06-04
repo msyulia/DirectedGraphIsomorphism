@@ -56,9 +56,7 @@ namespace DGI.Model
         public  static GraphModel RandomGraph(int verticesCount, int maxOutEdgeCount)
         {
             if (maxOutEdgeCount > verticesCount)
-            {
                 return null;
-            }
 
             List<List<int>> adjacencyList = new List<List<int>>();
             int edgeCount = 0;
