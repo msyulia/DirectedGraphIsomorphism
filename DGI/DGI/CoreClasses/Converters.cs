@@ -1,13 +1,55 @@
-﻿using System;
+﻿using DGI.Controller;
+using DGI.Model;
+using Microsoft.Msagl.Drawing;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace DGI.CoreClasses
 {
     public static class Converters
     {
+        public static Graph GraphModelToMSAGLGraph(GraphModel sourceGraph)
+        {
+            Graph result = new Graph();
+            int counter = 0;
+            for (int i = 0; i < sourceGraph.AdjacencyList.Count; i++)
+            {
+                result.AddNode(i.ToString());
+            }
+            foreach (List<int> List in sourceGraph.AdjacencyList)
+            {
+                foreach (int value in List)
+                {
+                    result.AddEdge(counter.ToString(), value.ToString());
+                }
+                counter++;
+            }
+            return result;
+        }
+        public static Graph GraphModelToMSAGLGraph(GraphController graphController)
+        {
+            GraphModel sourceGraph = graphController.Graph;
+            Graph result = new Graph();
+            int counter = 0;
+            for (int i = 0; i < sourceGraph.AdjacencyList.Count; i++)
+            {
+                result.AddNode(i.ToString());
+            }
+            foreach (List<int> List in sourceGraph.AdjacencyList)
+            {
+                foreach (int value in List)
+                {
+                    result.AddEdge(counter.ToString(), value.ToString());
+                }
+                counter++;
+            }
+            return result;
+        }
         public static int[,] ListToAdjacencyMatrix(List<List<int>> list)
         {
             if (list == null) return null;
@@ -39,7 +81,7 @@ namespace DGI.CoreClasses
         }
 
         /// <summary>
-        /// Core method, which allow to compare 2 lists of Adjacency. If they are the same, graphs are bijective
+        /// Core method, which allow to compare 2 lists of Adjacency. If they are the same, graphs are isomorphic
         /// </summary>
         /// <param name="order"> New order list [0-based indexing system]</param>
         /// <param name="actual"> Actual list od adjacency [normal indexing system]</param>
@@ -54,9 +96,24 @@ namespace DGI.CoreClasses
                 int j = 0;
                 foreach (var item in actual[orderN]) { consideredLine[j] = item; j++; }
                 for (int k = 0; k < consideredLine.Length; k++)
-                    for (int l = 0; l < order.Count; l++) if (order[l] == (consideredLine[k] )) { list[i].Add(l); break; }
+                    for (int l = 0; l < order.Count; l++) if (order[l] == (consideredLine[k])) { list[i].Add(l); break; }
             }
             return list;
+        }
+    }
+
+    public class WidthConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double val = (double)value;
+            val = ((double)3 / 5) * val;
+            return val; 
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
         }
     }
 }

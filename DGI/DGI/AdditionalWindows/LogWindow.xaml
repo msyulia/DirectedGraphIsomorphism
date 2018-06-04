@@ -1,0 +1,22 @@
+﻿<Window x:Class="DGI.LogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DGI"
+        mc:Ignorable="d"
+        Title="Log Window" Height="600" Width="400">
+    <Grid>
+        <RichTextBox Foreground="Black" IsEnabled="False">
+            <FlowDocument TextAlignment="Center">
+                <Paragraph>
+                    <Run>Wypisuje informacje o wyniku operacji grafowych</Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Name="LogConsole" IsEnabled="False">
+            <FlowDocument Name="LogSpace">
+            </FlowDocument>
+        </RichTextBox>
+    </Grid>
+</Window>

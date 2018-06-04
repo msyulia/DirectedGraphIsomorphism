@@ -1,0 +1,35 @@
+﻿<Window x:Class="DGI.AdditionalWindows.TypingInAdjMatrixSize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DGI.AdditionalWindows"
+        mc:Ignorable="d"
+        Title="Wpisz ilość wierzchołków" Height="130" Width="300" ResizeMode="NoResize">
+    <StackPanel>
+        <Grid>
+            <TextBox Margin="25,15" Height="25" Name="sizeOfMatrixTextBox">
+                <TextBox.BitmapEffect>
+                    <DropShadowBitmapEffect/>
+                </TextBox.BitmapEffect>
+
+            </TextBox>
+            <TextBlock IsHitTestVisible="False" Text="Proszę wpisać liczbę!" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="28,0" Height="25" Foreground="DarkGray" FontSize="14">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=sizeOfMatrixTextBox}" Value="">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+        <WrapPanel MinHeight="30" Margin="40,0">
+            <Button x:Name="cancelButton" Content="Anuluj" Style="{StaticResource buttonsStyle}" Template="{StaticResource buttonsTemplate}" Click="cancelButton_Click"></Button>
+            <Button x:Name="acceptButton" Content="Akceptuj" Style="{StaticResource buttonsStyle}" Template="{StaticResource buttonsTemplate}" Click="acceptButton_Click"></Button>
+        </WrapPanel>
+    </StackPanel>
+</Window>

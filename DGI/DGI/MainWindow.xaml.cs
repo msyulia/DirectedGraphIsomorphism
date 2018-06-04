@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Msagl;
-using Microsoft.Msagl.Drawing;
-using Microsoft.Msagl.Layout;
+﻿using System.Windows;
+using System.Windows.Forms.Integration;
 using Microsoft.Msagl.GraphViewerGdi;
 using DGI.Controller;
-using DGI.Model;
 using DGI.CoreClasses;
+using Microsoft.Msagl.Drawing;
+using System.Windows.Controls;
+using DGI.Model;
+using System.Threading;
+using System;
+using System.Collections.Generic;
+using DGI.AdditionalWindows;
 
 namespace DGI
 {
@@ -27,60 +18,51 @@ namespace DGI
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static LogWindow ConsoleLog;
+
+
         private const string REPO_URI = "https://github.com/KowalikJakub/DirectedGraphIsomorphism";
 
-        private Grid graphViewerGrid = new Grid();
-        private GViewer viewer_1 = new GViewer();
-        private GViewer viewer_2 = new GViewer();
+        private GViewer viewer_1;
+        private GViewer viewer_2;
 
-        private static MainWindow mainWindow;
+        private Graph graph_1;
+        private Graph graph_2;
 
-        
+        private GraphController graphController_1;
+        private GraphController graphController_2;
+
+        private static MainWindow _mainWindowInstance;
 
         public MainWindow()
         {
             InitializeComponent();
-            mainWindow = this;
+            _mainWindowInstance = this;
+            viewer_1 = new GViewer();
+            viewer_2 = new GViewer();
+            graphController_1 = new GraphController();
+            graphController_2 = new GraphController();
+            graph_1 = new Graph();
+            graph_2 = new Graph();
 
-            /* GraphController gc1 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a1);
-             GraphController gc2 = new GraphController(this, ExampleAdjacencyLists.lista4_5_a2);
-
-            GraphController gc3 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a1);
-            GraphController gc4 = new GraphController(this, ExampleAdjacencyLists.lista4_6_a2);
-            GraphController gc5 = new GraphController(this, ExampleAdjacencyLists.lista4_6_b1);
-
-            GraphController gc6 = new GraphController(this, ExampleAdjacencyLists.lista6_7_a1);
-            GraphController gc7 = new GraphController(this, ExampleAdjacencyLists.lista6_7_a2);
-            GraphController gc8 = new GraphController(this, ExampleAdjacencyLists.lista6_7_b1);
-
-            GraphController gc9 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a1);
-            GraphController gc10 = new GraphController(this, ExampleAdjacencyLists.lista9_9_a2);
-            System.Threading.Thread.Sleep(2000);*/
-
-            List<List<int>> lista1 = new List<List<int>>();
-            List<List<int>> lista2 = new List<List<int>>();
-            Random rand = new Random();
-            int n = 100;
-            for (int i = 0; i < n; i++)
-            {
-                lista1.Add(new List<int>());
-                lista2.Add(new List<int>());
-                for (int j = 0; j < 2; j++)
-                {
-                    lista1[i].Add(rand.Next(0, n));
-                    lista2[i].Add(rand.Next(2, n )/2);
-                }
-
-            }
-             gc1 = new GraphController(this, lista1);
-            gc2 = new GraphController(this, lista2);
+            Setup_GraphViewers();
         }
-        GraphController gc2, gc1;
-        private void Create_GraphView()
+
+        private void Setup_GraphViewers()
         {
-            graphViewerGrid.ClipToBounds = true;
+            viewer_1 = new GViewer
+            {
+                Graph = graph_1
+            };
 
+            viewer_2 = new GViewer
+            {
+                Graph = graph_2
+            };
+            _mainWindowInstance.WFH1.Child = viewer_1;
+            _mainWindowInstance.WFH2.Child = viewer_2;
         }
+
         private void SourceCodeButton_Click(object sender, RoutedEventArgs e)
         {
             BrowserController bl = new BrowserController(REPO_URI);
@@ -89,7 +71,86 @@ namespace DGI
 
         public static void ChangeProgress(int val)
         {
-            mainWindow.progressBar.Value = val;
+            _mainWindowInstance.progressBar.Value = val;
+        }
+
+        private void ShowLogWindow_Click(object sender, RoutedEventArgs e)
+        {
+            if (ConsoleLog != null)
+            {
+                if (!ConsoleLog.IsVisible)
+                {
+                    //Activate the window
+                    ConsoleLog.Activate();
+                }
+            }
+            else
+            {
+                ConsoleLog = new LogWindow();
+                ConsoleLog.Show();
+            }
+        }
+
+        private Tuple<int, int> CommonOperations1()
+        {
+            IsEnabled = false;
+            ChooseViewer chv = new ChooseViewer();
+            int index = chv.ReturnViewerIndex();
+            if (index == -1) { return null; }
+
+            TypingInAdjMatrixSize window = new TypingInAdjMatrixSize();
+            int size = window.ReturnSizeOfMatrix();
+            if (size > 30 || size < 1) { if (size > 30) { MessageBox.Show("Niestety, z powodów technicznych nie obsługujemy grafów większych niż 30 elementów, proszę wczytać graf z pliku"); } return null; }
+
+            return new Tuple<int, int>(index, size);
+        }
+
+        /// <param name="WFHIndex">Index okna WFHI. 0 to pierwsze okno, 1 to po prawej, 
+        ///         pobierane przez okno ChooseViewer.xaml</param>
+        /// <param name="listOrMatrix">lista lub macierz sąsiedztwa</param>
+        private void CommonOperations2(int WFHIndex, object listOrMatrix)
+        {
+            GViewer gViewerRef = WFHIndex == 0 ? viewer_1 : viewer_2;
+            GraphController graphControllerReference = WFHIndex == 0 ? graphController_1 : graphController_2;
+
+            if(listOrMatrix is int[,]) graphControllerReference = new GraphController(this, (int[,]) listOrMatrix);
+            else graphControllerReference = new GraphController(this, (List<List<int>>)listOrMatrix);
+            Thread.Sleep(1000);
+
+            Graph graphRef = WFHIndex == 0 ? graph_1 : graph_2;
+            graphRef = Converters.GraphModelToMSAGLGraph(graphControllerReference);
+            gViewerRef.Graph = graphRef;
+            WindowsFormsHost wfhReference = WFHIndex == 0 ? WFH1 : WFH1;
+            wfhReference.IsEnabled = true;
+            wfhReference.Child = gViewerRef;
+            IsEnabled = true;
+        }
+
+        private void adjMatrixMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Tuple<int, int> tuple = CommonOperations1();
+            if(tuple == null) { IsEnabled = true; return; }
+            int size = tuple.Item2;
+
+            AdjMtrx adjacencyMatrix = new AdjMtrx(size);
+            int[,] matrix = adjacencyMatrix.ReturnAdjMatrix();
+            if (matrix == null) { IsEnabled = true; return; }
+
+            CommonOperations2(tuple.Item1, matrix);
+        }
+
+        private void AdjListMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Tuple<int, int> tuple = CommonOperations1();
+            if (tuple == null) { IsEnabled = true; return; }
+            GViewer gViewerReference = tuple.Item1 == 0 ? viewer_1 : viewer_2;
+            int size = tuple.Item2;
+
+            AdjList adjacencyList = new AdjList(size);
+            List<List<int>> list = adjacencyList.ReturnAdjList();
+            if (list == null) { IsEnabled = true; return; }
+
+            CommonOperations2(tuple.Item1, list);
         }
 
         public static void ChangeProgresDupy(int val)
