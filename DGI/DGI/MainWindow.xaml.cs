@@ -120,7 +120,7 @@ namespace DGI
             Graph graphRef = WFHIndex == 0 ? graph_1 : graph_2;
             graphRef = Converters.GraphModelToMSAGLGraph(graphControllerReference);
             gViewerRef.Graph = graphRef;
-            WindowsFormsHost wfhReference = WFHIndex == 0 ? WFH1 : WFH1;
+            WindowsFormsHost wfhReference = WFHIndex == 0 ? WFH1 : WFH2;
             wfhReference.IsEnabled = true;
             wfhReference.Child = gViewerRef;
             IsEnabled = true;
