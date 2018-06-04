@@ -38,18 +38,17 @@ namespace DGI
         {
             InitializeComponent();
             _mainWindowInstance = this;
-            viewer_1 = new GViewer();
-            viewer_2 = new GViewer();
-            graphController_1 = new GraphController();
-            graphController_2 = new GraphController();
-            graph_1 = new Graph();
-            graph_2 = new Graph();
 
             Setup_GraphViewers();
+
+            graphController_1 = new GraphController();
+            graphController_2 = new GraphController();
         }
 
         private void Setup_GraphViewers()
         {
+            graph_1 = new Graph();
+            graph_2 = new Graph();
             viewer_1 = new GViewer
             {
                 Graph = graph_1
@@ -100,7 +99,7 @@ namespace DGI
 
             TypingInAdjMatrixSize window = new TypingInAdjMatrixSize();
             int size = window.ReturnSizeOfMatrix();
-            if (size > 30 || size < 1) { if (size > 30) { MessageBox.Show("Niestety, z powodów technicznych nie obsługujemy grafów większych niż 30 elementów, proszę wczytać graf z pliku"); } return null; }
+            if (size > 30 || size < 1) { if (size > 30) { MessageBox.Show("Niestety, z powodów technicznych nie obsługujemy grafów większych niż 30 wierzchołków, proszę wczytać graf z pliku"); } return null; }
 
             return new Tuple<int, int>(index, size);
         }
@@ -151,6 +150,44 @@ namespace DGI
             if (list == null) { IsEnabled = true; return; }
 
             CommonOperations2(tuple.Item1, list);
+        }
+
+        private async void LoadGraphItem_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".txt",
+            };
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                string fileName = dlg.FileName;
+                GraphModel graph = await GraphController.LoadGraphAsync(fileName);
+
+                ChooseViewer viewer = new ChooseViewer();
+                int index = viewer.ReturnViewerIndex();
+                GViewer gViewerRef = index == 0 ? viewer_1 : viewer_2;
+
+                gViewerRef.Graph = Converters.GraphModelToMSAGLGraph(graph);
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Nie można otworzyć pliku, nieznany błąd","Błąd",System.Windows.Forms.MessageBoxButtons.OK);
+            }
+        }
+
+        private async void SaveGraphItem_Click(object sender, RoutedEventArgs e)
+        {
+            ChooseViewer viewer = new ChooseViewer();
+            int index = viewer.ReturnViewerIndex();
+            Graph graphRef = index == 0 ? graph_1 : graph_2;
+            GraphModel graphModel = Converters.MSAGLGraphToGraphModel(graphRef);
+            Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
+            if (sfd.ShowDialog() == true)
+            {
+                await GraphController.SaveGraphAsync(graphModel, sfd.FileName);
+            }
         }
     }
 }
