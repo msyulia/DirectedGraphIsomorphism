@@ -7,6 +7,8 @@ using Microsoft.Msagl.Drawing;
 using System.Windows.Controls;
 using DGI.Model;
 using System.Threading;
+using System;
+using System.Collections.Generic;
 
 namespace DGI
 {
@@ -58,6 +60,7 @@ namespace DGI
             //    Dupa.Text += "\nWysłanie 2 grafów z 6 wierz: " + GraphOperation.IsBijective(gc6.Graph, gc7.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
             //    Dupa.Text += "\nWysłanie 2 grafów z 6 wierz wersja 2: " + GraphOperation.IsBijective(gc6.Graph, gc8.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
             //    Dupa.Text += "\nGrafy z 9 wierzchołkami: " + GraphOperation.IsBijective(gc9.Graph, gc10.Graph,0, new bool[100], new List<int>(), ref a) +"\t\tIlość potencjalnych dopasowań: "+ a; a = 0;
+            
         }
 
         private void Setup_GraphViewers()
@@ -66,13 +69,11 @@ namespace DGI
             viewer_2 = new GViewer();
 
             //Testowe grafy jak się zrobi tworzenie grafu z poziomu aplikacji to tu trzeba podmienić
-            graph_1 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(10, 3));
+            // graph_1 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(10, 3));
             graph_2 = Converters.GraphModelToMSAGLGraph(GraphModel.RandomGraph(15, 5));
 
-            viewer_1.Graph = graph_1;
             viewer_2.Graph = graph_2;
 
-            _mainWindowInstance.WFH1.Child = viewer_1;
             _mainWindowInstance.WFH2.Child = viewer_2;
         }
 
@@ -102,6 +103,34 @@ namespace DGI
                 ConsoleLog = new LogWindow();
                 ConsoleLog.Show();
             }
+        }
+
+        private void adjMatrixMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            AdditionalWindows.TypingInAdjMatrixSize window = new AdditionalWindows.TypingInAdjMatrixSize();
+            IsEnabled = false;
+            int a = window.ReturnSizeOfMatrix(this);
+            if(a > 0)
+            {
+                AdditionalWindows.AdjMtrx am = new AdditionalWindows.AdjMtrx(a);
+                int[,] tab = am.ReturnAdjMatrix(this);
+
+                GraphModel gm = new GraphModel(tab);
+                graph_1 = Converters.GraphModelToMSAGLGraph(gm);
+
+                viewer_1.Graph = graph_1;
+                _mainWindowInstance.WFH1.Child = viewer_1;
+            }
+
+        }
+
+        private void adjListMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            AdditionalWindows.TypingInAdjMatrixSize window = new AdditionalWindows.TypingInAdjMatrixSize();
+            IsEnabled = false;
+            int a = window.ReturnSizeOfMatrix(this);
+            AdditionalWindows.AdjList adl = new AdditionalWindows.AdjList(a);
+            List<List<int>> lista = adl.ReturnAdjList(this);
         }
     }
 }

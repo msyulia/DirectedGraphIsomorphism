@@ -2,9 +2,11 @@
 using Microsoft.Msagl.Drawing;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace DGI.CoreClasses
 {
@@ -77,6 +79,24 @@ namespace DGI.CoreClasses
                     for (int l = 0; l < order.Count; l++) if (order[l] == (consideredLine[k])) { list[i].Add(l); break; }
             }
             return list;
+        }
+    }
+
+    public class WidthConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Console.WriteLine(value.ToString());
+            double val = (double)value;
+            Console.WriteLine(val);
+            val = ((double)3 / 5) * val;
+            Console.WriteLine(val);
+            return val; 
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
         }
     }
 }

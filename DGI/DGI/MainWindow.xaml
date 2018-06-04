@@ -5,14 +5,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:g ="clr-namespace:Microsoft.Msagl.GraphViewerGdi;assembly=Microsoft.Msagl.GraphViewerGdi"
-        xmlns:local="clr-namespace:DGI"
+        xmlns:local="clr-namespace:DGI.CoreClasses"
         mc:Ignorable="d"
-        Title="Izomorfizm grafów" Height="600" Width="800">
+        Title="Izomorfizm grafów" Height="610" Width="800" x:Name="mainWindow">
+    <Window.Resources>
+        <local:WidthConverter x:Key="widthConverter"/>
+    </Window.Resources>
     <StackPanel>
         <DockPanel HorizontalAlignment="Left" Height="25" LastChildFill="False" Margin="0,0,-8,0" VerticalAlignment="Top" Width="800">
             <Menu Height="25" VerticalAlignment="Top" Width="792">
                 <MenuItem Header="Plik" Height="25" Width="30">
-                    <MenuItem Header="Nowy" HorizontalAlignment="Left" Height="20" Width="150"/>
+                    <MenuItem Header="Nowy" HorizontalAlignment="Left" Height="20" Width="150">
+                        <MenuItem Header="Lista Sąsiedztwa" x:Name="adjListMenuItem" Click="adjListMenuItem_Click"/>
+                        <MenuItem Header="Macierz Sąsiedztwa" x:Name="adjMatrixMenuItem" Click="adjMatrixMenuItem_Click"/>
+                    </MenuItem>
                     <MenuItem Header="Otwórz" HorizontalAlignment="Left" Height="20" Width="150" />
                     <MenuItem Header="Zapisz" HorizontalAlignment="Left" Height="20" Width="150"/>
                     <MenuItem Header="Zapisz jako" HorizontalAlignment="Left" Height="20" Width="150" />
@@ -41,7 +47,11 @@
             <WindowsFormsHost Grid.Row="0" Grid.Column="0" Name="WFH2">
             </WindowsFormsHost>
         </Grid>
-        <ProgressBar Height="24" Width="775" x:Name="progressBar" Minimum="0" Maximum="100" Margin="8,0"/>
+        <WrapPanel>
+            <Button Content="Sprawdź izomorfizm!" Width="200" Margin="5,4"
+                    Style="{StaticResource buttonsStyle}" Template="{StaticResource ResourceKey=buttonsTemplate}"/>
+            <ProgressBar x:Name="progressBar" Margin="15,3" MinWidth="{Binding ElementName=mainWindow, Path=Width, Converter={StaticResource widthConverter}}" Minimum="0" Maximum="100" />
+        </WrapPanel>
     </StackPanel>
 </Window>
     

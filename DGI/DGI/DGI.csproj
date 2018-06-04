@@ -66,6 +66,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdditionalWindows\AdjList.xaml.cs">
+      <DependentUpon>AdjList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdditionalWindows\AdjMtrx.xaml.cs">
+      <DependentUpon>AdjMtrx.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdditionalWindows\TypingInAdjMatrixSize.xaml.cs">
+      <DependentUpon>TypingInAdjMatrixSize.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controller\GraphController.cs" />
     <Compile Include="Controller\GraphOperation.cs" />
     <Compile Include="CoreClasses\ExampleAdjacencyLists.cs" />
@@ -76,6 +85,18 @@
     <Compile Include="Model\VerticeModel.cs" />
     <Compile Include="View\GraphView.cs" />
     <Compile Include="View\View.cs" />
+    <Page Include="AdditionalWindows\AdjList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdditionalWindows\AdjMtrx.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdditionalWindows\TypingInAdjMatrixSize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
