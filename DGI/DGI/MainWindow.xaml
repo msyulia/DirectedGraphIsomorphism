@@ -21,7 +21,7 @@
         </Style>
         <Style TargetType="MenuItem" x:Key="menuItemInside">
             <Setter Property="Width" Value="250" />
-            <Setter Property="Height" Value="20" />
+            <Setter Property="Height" Value="30" />
             <Setter Property="FontSize" Value="15" />
             <Setter Property="HorizontalAlignment" Value="Left" />
 
@@ -32,17 +32,17 @@
             <Menu Height="25" VerticalAlignment="Top" Width="792">
                 <MenuItem Header="Plik" Style="{StaticResource menuItem}">
                     <MenuItem Header="Nowy" Style="{StaticResource menuItemInside}" >
-                        <MenuItem Header="Lista Sąsiedztwa" Style="{StaticResource menuItemInside}" x:Name="adjListMenuItem" Click="AdjListMenuItem_Click"/>
+                        <MenuItem Header="Lista Sąsiedztwa" Style="{StaticResource menuItemInside}" x:Name="adjListMenuItem" Click="adjListMenuItem_Click"/>
                         <MenuItem Header="Macierz Sąsiedztwa" Style="{StaticResource menuItemInside}" x:Name="adjMatrixMenuItem" Click="adjMatrixMenuItem_Click"/>
                     </MenuItem>
                     <MenuItem Header="Otwórz" Style="{StaticResource menuItemInside}" x:Name="LoadGraphItem" Click="LoadGraphItem_Click" />
                     <MenuItem Header="Zapisz jako" Style="{StaticResource menuItemInside}" x:Name="SaveGraphItem" Click="SaveGraphItem_Click"/>
                     <MenuItem Header="-------------" Style="{StaticResource menuItemInside}" IsEnabled="False"/>
-                    <MenuItem Header="Wyjście" Style="{StaticResource menuItemInside}" />
+                    <MenuItem Header="Wyjście" x:Name="closeMeuItem" Click="closeMeuItem_Click" Style="{StaticResource menuItemInside}" />
                 </MenuItem>
-                <MenuItem Header="Widok"  Style="{StaticResource menuItem}">
+                <!--<MenuItem Header="Widok"  Style="{StaticResource menuItem}">
                     <MenuItem Header="Pokaż Logi" Style="{StaticResource menuItemInside}" Click="ShowLogWindow_Click"></MenuItem>
-                </MenuItem>
+                </MenuItem>-->
                 <MenuItem Header="Pomoc" Style="{StaticResource menuItem}">
                     <MenuItem Header="O Autorach" Style="{StaticResource menuItemInside}" />
                     <MenuItem Header="Źródło" Style="{StaticResource menuItemInside}" Click="SourceCodeButton_Click"/>
@@ -63,8 +63,9 @@
             </WindowsFormsHost>
         </Grid>
         <WrapPanel>
-            <Button Content="Sprawdź izomorfizm!" Width="200" Margin="5,4"
-                    Style="{StaticResource buttonsStyle}" Template="{StaticResource ResourceKey=buttonsTemplate}"/>
+            <Button Content="Sprawdź izomorfizm!" Width="200" Margin="5,3"
+                    Style="{StaticResource buttonsStyle}" Template="{StaticResource ResourceKey=buttonsTemplate}" 
+                    x:Name="checkIsomorphismButton" Click="checkIsomorphismButton_Click"/>
             <ProgressBar x:Name="progressBar" Margin="15,3" MinWidth="{Binding ElementName=mainWindow, Path=Width, Converter={StaticResource widthConverter}}" Minimum="0" Maximum="100" />
         </WrapPanel>
     </StackPanel>

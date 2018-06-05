@@ -110,18 +110,22 @@ namespace DGI
         private void CommonOperations2(int WFHIndex, object listOrMatrix)
         {
             GViewer gViewerRef = WFHIndex == 0 ? viewer_1 : viewer_2;
-            GraphController graphControllerReference = WFHIndex == 0 ? graphController_1 : graphController_2;
+            GraphController graphControllerReference = new GraphController();
 
             if(listOrMatrix is int[,]) graphControllerReference = new GraphController(this, (int[,]) listOrMatrix);
             else graphControllerReference = new GraphController(this, (List<List<int>>)listOrMatrix);
             Thread.Sleep(1000);
 
-            Graph graphRef = WFHIndex == 0 ? graph_1 : graph_2;
+            Graph graphRef = new Graph();
             graphRef = Converters.GraphModelToMSAGLGraph(graphControllerReference);
             gViewerRef.Graph = graphRef;
             WindowsFormsHost wfhReference = WFHIndex == 0 ? WFH1 : WFH2;
             wfhReference.IsEnabled = true;
             wfhReference.Child = gViewerRef;
+
+            if(WFHIndex == 0) { graphController_1 = graphControllerReference; graph_1 = graphRef; }
+            else { graphController_2 = graphControllerReference; graph_2 = graphRef; }
+
             IsEnabled = true;
         }
 
@@ -152,7 +156,7 @@ namespace DGI
             CommonOperations2(tuple.Item1, list);
         }
 
-        private async void LoadGraphItem_Click(object sender, RoutedEventArgs e)
+        private void LoadGraphItem_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
             {
@@ -163,13 +167,11 @@ namespace DGI
             if (result == true)
             {
                 string fileName = dlg.FileName;
-                GraphModel graph = await GraphController.LoadGraphAsync(fileName);
+                List<List<int>> adjList = GraphController.LoadGraph(fileName);
 
                 ChooseViewer viewer = new ChooseViewer();
                 int index = viewer.ReturnViewerIndex();
-                GViewer gViewerRef = index == 0 ? viewer_1 : viewer_2;
-
-                gViewerRef.Graph = Converters.GraphModelToMSAGLGraph(graph);
+                CommonOperations2(index, adjList);
             }
             else
             {
@@ -181,13 +183,32 @@ namespace DGI
         {
             ChooseViewer viewer = new ChooseViewer();
             int index = viewer.ReturnViewerIndex();
-            Graph graphRef = index == 0 ? graph_1 : graph_2;
-            GraphModel graphModel = Converters.MSAGLGraphToGraphModel(graphRef);
+            GraphController gc = index == 0 ? graphController_1 : graphController_2;
             Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
             if (sfd.ShowDialog() == true)
             {
-                await GraphController.SaveGraphAsync(graphModel, sfd.FileName);
+                await GraphController.SaveGraphAsync(gc.Graph, sfd.FileName);
             }
+        }
+
+        private void checkIsomorphismButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (graphController_1.Graph != null && graphController_2.Graph != null)
+            {
+                bool result = GraphOperation.IsBijective(graphController_1.Graph, graphController_2.Graph, 0, new bool[graphController_2.Graph.VerticesCount], new List<int>());
+
+                string message = "";
+
+                if (result)
+                    message = "Grafy są izomorficzne!";
+                else message = "Niestety grafy nie są izomorficzne";
+                MessageBox.Show(message, "Wynik", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }
+        }
+
+        private void closeMeuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

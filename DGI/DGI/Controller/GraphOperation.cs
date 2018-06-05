@@ -21,13 +21,12 @@ namespace DGI.Controller
         /// <param name="current"></param>
         /// <param name="used">Vertices from G2 assigned to G1</param>
         /// <returns></returns>
-        public static bool IsBijective(GraphModel G1, GraphModel G2, int current, bool[] used, List<int> newOrder, ref int a)
+        public static bool IsBijective(GraphModel G1, GraphModel G2, int current, bool[] used, List<int> newOrder)
         {
             for (int i = 0; i < G2.Vertices.Count; i++)
             {
                 if (current >= G1.Vertices.Count)
                 {
-                    a++; //do wywalenia
                     List<List<int>> outcome = Converters.NewAdjacencyListOrder(newOrder, G2.AdjacencyList);
                     if (CompareTwoLists(outcome, G1.AdjacencyList)) return true;
                     else return false;
@@ -39,7 +38,7 @@ namespace DGI.Controller
                     {
                         used[i] = true;
                         newOrder.Add(i);
-                        bool isTrue = IsBijective(G1, G2, current + 1, used, newOrder, ref a);
+                        bool isTrue = IsBijective(G1, G2, current + 1, used, newOrder);
                         newOrder.RemoveAt(newOrder.Count - 1);
                         if (isTrue) return true;
                         else used[i] = false;

@@ -113,45 +113,39 @@ namespace DGI.Controller
 
             return new GraphModel(adjList);
         }
-        public static GraphModel LoadGraph(string path)
+        public static List<List<int>> LoadGraph(string path)
         {
             StreamReader sr = new StreamReader(path);
             List<List<int>> adjList = new List<List<int>>();
             List<int> temp;
-            string line;
-            while (!sr.EndOfStream)
-            {
-                temp = new List<int>();
-                line = sr.ReadLine();
 
-                for (int i = 0; i < line.Length; i++)
-                {
-                    if (line[i] != ',')
-                    {
-                        temp.Add(line[i] - ASCII_OFFSET);
-                    }
-                }
+            string text = sr.ReadToEnd();
+            sr.Close();
+            string[] line = text.Split('\n');
+            int i = 0;
+            foreach (var item in line)
+            {
+                if (i == line.Length - 1) break;
+                i++;
+                string[] single = item.Split(',');
+                temp = new List<int>();
+                foreach (var element in single)
+                    if(element!= "\r" && element != " " && element != "")
+                        temp.Add(Convert.ToInt32(element));
                 adjList.Add(temp);
             }
-            sr.Close();
-            return new GraphModel(adjList);
+            return adjList;
         }
         public static async Task SaveGraphAsync(GraphModel graph, string path)
         {
             StreamWriter sw = new StreamWriter(path);
 
-            for (int i = 0; i < graph.VerticesCount; i++)
+            foreach (var row in graph.AdjacencyList)
             {
-                for (int j = 0; j < graph.VerticesCount; j++)
+                for (int i = 0; i < row.Count; i++)
                 {
-                    if (graph[i, j] != 0)
-                    {
-                        await sw.WriteAsync(graph[i, j].ToString());
-                    }
-                    if (j < graph.VerticesCount - 1)
-                    {
-                        await sw.WriteAsync(",");
-                    }
+                    await sw.WriteAsync(row[i].ToString());
+                    if(i != row.Count-1) await sw.WriteAsync(",");
                 }
                 await sw.WriteLineAsync();
             }
