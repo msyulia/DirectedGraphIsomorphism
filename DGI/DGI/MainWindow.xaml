@@ -1,0 +1,73 @@
+﻿<Window x:Class="DGI.MainWindow"
+        xmlns:gv="clr-namespace:Microsoft.Msagl.GraphViewerGdi;assembly=Microsoft.Msagl.GraphViewerGDI"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:g ="clr-namespace:Microsoft.Msagl.GraphViewerGdi;assembly=Microsoft.Msagl.GraphViewerGdi"
+        xmlns:local="clr-namespace:DGI.CoreClasses"
+        mc:Ignorable="d"
+        Title="Izomorfizm grafów" Height="610" Width="800" x:Name="mainWindow">
+    <Window.Resources>
+        <local:WidthConverter x:Key="widthConverter"/>
+        <Style TargetType="MenuItem" x:Key="menuItem">
+            <Setter Property="Width" Value="90" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="0.5" />
+            <Setter Property="BorderBrush" Value="Gray" />
+        </Style>
+        <Style TargetType="MenuItem" x:Key="menuItemInside">
+            <Setter Property="Width" Value="250" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <DockPanel Height="25" LastChildFill="False" Margin="0,0,-8,0" VerticalAlignment="Top">
+            <Menu Height="25" VerticalAlignment="Top" Width="792">
+                <MenuItem Header="Plik" Style="{StaticResource menuItem}">
+                    <MenuItem Header="Nowy" Style="{StaticResource menuItemInside}" >
+                        <MenuItem Header="Lista Sąsiedztwa" Style="{StaticResource menuItemInside}" x:Name="adjListMenuItem" Click="adjListMenuItem_Click"/>
+                        <MenuItem Header="Macierz Sąsiedztwa" Style="{StaticResource menuItemInside}" x:Name="adjMatrixMenuItem" Click="adjMatrixMenuItem_Click"/>
+                    </MenuItem>
+                    <MenuItem Header="Otwórz" Style="{StaticResource menuItemInside}" x:Name="LoadGraphItem" Click="LoadGraphItem_Click" />
+                    <MenuItem Header="Zapisz jako" Style="{StaticResource menuItemInside}" x:Name="SaveGraphItem" Click="SaveGraphItem_Click"/>
+                    <MenuItem Header="-------------" Style="{StaticResource menuItemInside}" IsEnabled="False"/>
+                    <MenuItem Header="Wyjście" x:Name="closeMeuItem" Click="closeMeuItem_Click" Style="{StaticResource menuItemInside}" />
+                </MenuItem>
+                <!--<MenuItem Header="Widok"  Style="{StaticResource menuItem}">
+                    <MenuItem Header="Pokaż Logi" Style="{StaticResource menuItemInside}" Click="ShowLogWindow_Click"></MenuItem>
+                </MenuItem>-->
+                <MenuItem Header="Pomoc" Style="{StaticResource menuItem}">
+                    <MenuItem Header="O Autorach" Style="{StaticResource menuItemInside}" />
+                    <MenuItem Header="Źródło" Style="{StaticResource menuItemInside}" Click="SourceCodeButton_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Grid Name="GraphGrid" Height="510">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <WindowsFormsHost Grid.Row="1" Grid.Column="0" Name="WFH1" IsEnabled="False">
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Row="0" Grid.Column="1" Name="WFH2" IsEnabled="False">
+            </WindowsFormsHost>
+        </Grid>
+        <WrapPanel>
+            <Button Content="Sprawdź izomorfizm!" Width="200" Margin="5,3"
+                    Style="{StaticResource buttonsStyle}" Template="{StaticResource ResourceKey=buttonsTemplate}" 
+                    x:Name="checkIsomorphismButton" Click="checkIsomorphismButton_Click"/>
+            <ProgressBar x:Name="progressBar" Margin="15,3" MinWidth="{Binding ElementName=mainWindow, Path=Width, Converter={StaticResource widthConverter}}" Minimum="0" Maximum="100" />
+        </WrapPanel>
+    </StackPanel>
+</Window>
+    
